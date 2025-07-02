@@ -1,0 +1,6 @@
+-lib flixel
+-lib flixel-addons
+-lib flixel-ui
+-lib hscript
+-lib linc_luajit
+-lib hxcpp-debug-server
