@@ -34,7 +34,7 @@ jobs:
             cache-build-android
       - name: Installing/Updating libraries
         run: |
-          haxe -cp commandline -D analyzer-optimize --run mobile setup -s --lib=./libs.mobile.xml
+          haxe -cp commandline -D analyzer-optimize --run Mobile setup -s --lib=./libs.mobile.xml
       - name: Configuring Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
