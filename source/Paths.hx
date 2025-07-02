@@ -94,11 +94,9 @@ class Paths
 	}
 
 	inline static public function lowhpmusic(song:String)
-		{
-			return 'songs:assets/songs/${song.toLowerCase()}/InstLowHP.$SOUND_EXT';
-		}
-
-
+	{
+		return 'songs:assets/songs/${song.toLowerCase()}/InstLowHP.$SOUND_EXT';
+	}
 
 	static public function getLibraryPath(file:String, library = "preload")
 	{
@@ -144,7 +142,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsSounds(key);
-		if(FileSystem.exists(file)) {
+		if(Util.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
 				customSoundsLoaded.set(file, Sound.fromFile(file));
 			}
@@ -160,16 +158,16 @@ class Paths
 	}
 
 	inline static public function video(key:String, ?library:String)
-		{
-			trace('assets/videos/$key.mp4');
-			return getPath('videos/$key.mp4', BINARY, library);
-		}
+	{
+		trace('assets/videos/$key.mp4');
+		return getPath('videos/$key.mp4', BINARY, library);
+	}
 
 	inline static public function music(key:String, ?library:String):Dynamic
 	{
 		#if MODS_ALLOWED
 		var file:String = modsMusic(key);
-		if(FileSystem.exists(file)) {
+		if(Util.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
 				customSoundsLoaded.set(file, Sound.fromFile(file));
 			}
@@ -204,7 +202,7 @@ class Paths
 	#if MODS_ALLOWED
 	inline static private function returnSongFile(file:String):Sound
 	{
-		if(FileSystem.exists(file)) {
+		if(Util.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
 				customSoundsLoaded.set(file, Sound.fromFile(file));
 			}
@@ -237,25 +235,25 @@ class Paths
 	{
 		#if sys
 		#if MODS_ALLOWED
-		if (!ignoreMods && FileSystem.exists(mods(key)))
-			return File.getContent(mods(key));
+		if (!ignoreMods && Util.exists(mods(key)))
+			return Util.getContent(mods(key));
 		#end
 
-		if (FileSystem.exists(getPreloadPath(key)))
-			return File.getContent(getPreloadPath(key));
+		if (Util.exists(getPreloadPath(key)))
+			return Util.getContent(getPreloadPath(key));
 
 		if (currentLevel != null)
 		{
 			var levelPath:String = '';
 			if(currentLevel != 'shared') {
 				levelPath = getLibraryPathForce(key, currentLevel);
-				if (FileSystem.exists(levelPath))
-					return File.getContent(levelPath);
+				if (Util.exists(levelPath))
+					return Util.getContent(levelPath);
 			}
 
 			levelPath = getLibraryPathForce(key, 'shared');
-			if (FileSystem.exists(levelPath))
-				return File.getContent(levelPath);
+			if (Util.exists(levelPath))
+				return Util.getContent(levelPath);
 		}
 		#end
 		return Assets.getText(getPath(key, TEXT));
@@ -265,7 +263,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsFont(key);
-		if(FileSystem.exists(file)) {
+		if(Util.exists(file)) {
 			return file;
 		}
 		#end
@@ -275,7 +273,7 @@ class Paths
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
-		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+		if(Util.exists(mods(currentModDirectory + '/' + key)) || Util.exists(mods(key))) {
 			return true;
 		}
 		#end
@@ -291,7 +289,7 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
 		var xmlExists:Bool = false;
-		if(FileSystem.exists(modsXml(key))) {
+		if(Util.exists(modsXml(key))) {
 			xmlExists = true;
 		}
 
@@ -306,7 +304,7 @@ class Paths
 		#if MODS_ALLOWED
 		var imageLoaded:FlxGraphic = addCustomGraphic(key);
 		var txtExists:Bool = false;
-		if(FileSystem.exists(modsTxt(key))) {
+		if(Util.exists(modsTxt(key))) {
 			txtExists = true;
 		}
 
@@ -316,13 +314,15 @@ class Paths
 		#end
 	}
 
-	inline static public function formatToSongPath(path:String) {
+	inline static public function formatToSongPath(path:String)
+	{
 		return path.toLowerCase().replace(' ', '-');
 	}
 	
 	#if MODS_ALLOWED
-	static public function addCustomGraphic(key:String):FlxGraphic {
-		if(FileSystem.exists(modsImages(key))) {
+	static public function addCustomGraphic(key:String):FlxGraphic
+	{
+		if(Util.exists(modsImages(key))) {
 			if(!customImagesLoaded.exists(key)) {
 				var newBitmap:BitmapData = BitmapData.fromFile(modsImages(key));
 				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, key);
@@ -335,63 +335,75 @@ class Paths
 		return null;
 	}
 
-	inline static public function mods(key:String = '') {
+	inline static public function mods(key:String = '')
+	{
 		return 'mods/' + key;
 	}
 	
-	inline static public function modsFont(key:String) {
+	inline static public function modsFont(key:String)
+	{
 		return modFolders('fonts/' + key);
 	}
 
-	inline static public function modsJson(key:String) {
+	inline static public function modsJson(key:String)
+	{
 		return modFolders('data/' + key + '.json');
 	}
 
-	inline static public function modsVideo(key:String) {
+	inline static public function modsVideo(key:String)
+	{
 		return modFolders('videos/' + key + '.' + VIDEO_EXT);
 	}
 
-	inline static public function modsMusic(key:String) {
+	inline static public function modsMusic(key:String)
+	{
 		return modFolders('music/' + key + '.' + SOUND_EXT);
 	}
 
-	inline static public function modsSounds(key:String) {
+	inline static public function modsSounds(key:String)
+	{
 		return modFolders('sounds/' + key + '.' + SOUND_EXT);
 	}
 
-	inline static public function modsSongs(key:String) {
+	inline static public function modsSongs(key:String)
+	{
 		return modFolders('songs/' + key + '.' + SOUND_EXT);
 	}
 
-	inline static public function modsImages(key:String) {
+	inline static public function modsImages(key:String)
+	{
 		return modFolders('images/' + key + '.png');
 	}
 
-	inline static public function modsXml(key:String) {
+	inline static public function modsXml(key:String)
+	{
 		return modFolders('images/' + key + '.xml');
 	}
 
-	inline static public function modsTxt(key:String) {
+	inline static public function modsTxt(key:String)
+	{
 		return modFolders('images/' + key + '.txt');
 	}
 
-	static public function modFolders(key:String) {
+	static public function modFolders(key:String)
+	{
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
-			if(FileSystem.exists(fileToCheck)) {
+			if(Util.exists(fileToCheck)) {
 				return fileToCheck;
 			}
 		}
 		return 'mods/' + key;
 	}
 
-	static public function getModDirectories():Array<String> {
+	static public function getModDirectories():Array<String>
+	{
 		var list:Array<String> = [];
 		var modsFolder:String = Paths.mods();
-		if(FileSystem.exists(modsFolder)) {
-			for (folder in FileSystem.readDirectory(modsFolder)) {
+		if(Util.exists(modsFolder)) {
+			for (folder in Util.readDirectory(modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
-				if (sys.FileSystem.isDirectory(path) && !Paths.ignoreModFolders.contains(folder) && !list.contains(folder)) {
+				if (Util.isDirectory(path) && !Paths.ignoreModFolders.contains(folder) && !list.contains(folder)) {
 					list.push(folder);
 				}
 			}
