@@ -33,8 +33,8 @@ jobs:
           restore-keys: |
             cache-build-android
       - name: Installing/Updating libraries
-        run: |
-          haxe -cp commandline -D analyzer-optimize --run Mobile setup -s --lib=./libs.mobile.xml
+        run: 
+          haxelib install
       - name: Configuring Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
