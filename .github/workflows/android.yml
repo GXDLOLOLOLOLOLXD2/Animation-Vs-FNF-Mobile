@@ -19,12 +19,12 @@ jobs:
         uses: nttld/setup-ndk@main
         id: setup-ndk
         with:
-          ndk-version: r25e
+          ndk-version: r27c
 
       - name: Setup Java JDK
-        uses: actions/setup-java@main
+        uses: actions/setup-java@v3
         with:
-          java-version: 18
+          java-version: 17
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
