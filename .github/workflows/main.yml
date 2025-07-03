@@ -12,12 +12,12 @@ jobs:
       - name: Pulling the new commit
         uses: actions/checkout@main #v2
       - name: Setting up Haxe
-        uses: krdlab/setup-haxe@main #v1
+        uses: krdlab/setup-haxe@v1.1.5 #v1
         with:
-          haxe-version: 4.3.6 # 4.2.5
+          haxe-version: 4.2.5 # 4.3.6 or 4.2.5
       - name: Setting up Android NDK
         id: setup-ndk
-        uses: nttld/setup-ndk@main
+        uses: nttld/setup-ndk@v1
         with:
           ndk-version: r27c
           add-to-path: false

@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@main
 
       - name: Setup Android NDK
-        uses: nttld/setup-ndk@main
+        uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
           ndk-version: r27c
@@ -32,7 +32,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1.1.5
         with:
-          haxe-version: 4.3.6 # 4.2.5
+          haxe-version: 4.2.5 # 4.2.5 or 4.3.6
 
       - name: Restore existing build cache for faster compilation
         uses: actions/cache@v3
