@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "hxcpp": "",
+    "lime": "",
+    "openfl": "",
+    "flixel": "",
+    "flixel-tools": "",
+    "flixel-ui": "",
+    "hscript": "",
+    "flixel-addons": "",
+    "hxCodec": "git:https://github.com/polybiusproxy/hxcodec",
+    "discord_rpc": "git:https://github.com/Aidan63/linc_discord-rpc",
+    "extension-webview": "git:https://github.com/Daninnocent/extension-webview.git",
+    "linc_luajit": "git:https://github.com/jigsaw-4277821/linc_luajit.git",
+    "extension-androidtools": "git:https://github.com/MAJigsaw77/extension-androidtools.git"
+  }
+}

@@ -34,6 +34,7 @@ jobs:
             cache-build-android
       - name: Installing required Haxelibs
         run: |
+          haxelib setup ~/haxelib
           haxelib install flixel
           haxelib install flixel-addons
           haxelib install flixel-ui

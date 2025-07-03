@@ -25,6 +25,14 @@ package mobile.input;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import haxe.ds.Map;
 
+import mobile.objects.TouchButton;
+import mobile.*;
+import mobile.backend.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 /**
  * A TouchButton group with functions for input handling
  * @author Karim Akra
