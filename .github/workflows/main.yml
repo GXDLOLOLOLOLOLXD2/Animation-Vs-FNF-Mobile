@@ -32,8 +32,16 @@ jobs:
             export/release/android/obj/
           restore-keys: |
             cache-build-android
-      - name: Installing/Updating libraries
-        run: haxe install-libs.hxml
+      - name: Installing required Haxelibs
+        run: |
+          haxelib install flixel
+          haxelib install flixel-addons
+          haxelib install flixel-ui
+          haxelib install hscript
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git
+          haxelib install hxcpp-debug-server
+          haxelib install lime
+          haxelib install openfl
       - name: Configuring Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
