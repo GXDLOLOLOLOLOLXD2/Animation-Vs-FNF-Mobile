@@ -182,12 +182,20 @@ class StoryMenuState extends MusicBeatState
 		changeWeek();
 
 		super.create();
+
+		//#if mobile
+		addTouchPad("LEFT_FULL", "A_B_X_Y");
+		addTouchPadCamera();
+		//#end
 	}
 
 	override function closeSubState() {
 		persistentUpdate = true;
 		changeWeek();
 		super.closeSubState();
+		removeTouchPad();
+		addTouchPad("LEFT_FULL", "A_B_X_Y");
+		addTouchPadCamera();
 	}
 
 	override function update(elapsed:Float)
@@ -228,25 +236,33 @@ class StoryMenuState extends MusicBeatState
 			else
 				leftArrow.animation.play('idle');
 
-			if (controls.UI_RIGHT_P)
+			if (controls.UI_RIGHT_P) // right
 				changeDifficulty(1);
-			else if (controls.UI_LEFT_P)
+			else if (controls.UI_LEFT_P) // left
 				changeDifficulty(-1);
 			else if (upP || downP)
 				changeDifficulty();
 
-			if(FlxG.keys.justPressed.CONTROL)
+			#if mobile
+			var ctrl = touchPad.buttonX.justPressed // X replace ctrl for open the Gameplay Settings like speed and others
+			var r_y = touchPad.buttonY.justPressed // Y replace reset for reset the score of a song/week
+			#else
+			var ctrl = FlxG.keys.justPressed.CONTROL
+			var r_y = controls.RESET
+			#end
+
+			if(ctrl)
 			{
 				persistentUpdate = false;
 				openSubState(new GameplayChangersSubstate());
 			}
-			else if(controls.RESET)
+			else if(r_y)
 			{
 				persistentUpdate = false;
 				openSubState(new ResetScoreSubState('', curDifficulty, '', curWeek));
 				//FlxG.sound.play(Paths.sound('scrollMenu'));
 			}
-			else if (controls.ACCEPT)
+			else if (controls.ACCEPT) // a
 			{
 				selectWeek();
 			}

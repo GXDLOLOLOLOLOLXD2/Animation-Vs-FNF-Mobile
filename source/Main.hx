@@ -9,6 +9,8 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 
+// import mobile.backend.MobileData;
+
 class Main extends Sprite
 {
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
@@ -30,6 +32,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		// MobileData.init();
 
 		if (stage != null)
 		{
@@ -72,12 +76,17 @@ class Main extends Sprite
 		ClientPrefs.loadDefaultKeys();
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
 
-		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
 		if(fpsVar != null) {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
+
+		#if mobile
+		lime.system.System.allowScreenTimeout = ClientPrefs.screensaver;
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK]; 
+		#end
 		#end
 
 		#if html5

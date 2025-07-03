@@ -26,36 +26,38 @@ class WarningState extends MusicBeatState
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Hey there person man/woman   \n
 			This song contains an animated background and it may cause a headache,\n
-			Press Esc if you want to disable it or press Enter if you don't wanna disable it,\n
+			Press B if you want to disable it or press A if you don't wanna disable it,\n
 			\n
 			Hope you enjoy this song",
 			32);
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
+
+		addTouchPad("NONE", "A_B");
 	}
 
 	override function update(elapsed:Float)
 	{
-			if (controls.ACCEPT) {
-                PlayState.animatedbgdisable = false;
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+		if (controls.ACCEPT) {
+            PlayState.animatedbgdisable = false;
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+            PlayState.SONG = Song.loadFromJson('chosen', 'chosen');
+            LoadingState.loadAndSwitchState(new PlayState());
+            FlxTween.tween(warnText, {alpha: 0}, 1, {
+            });
+		}
+        else if (controls.BACK) 
+        {
+            {
+                PlayState.animatedbgdisable = true;
+                FlxG.sound.play(Paths.sound('cancelMenu'));
                 PlayState.SONG = Song.loadFromJson('chosen', 'chosen');
-                LoadingState.loadAndSwitchState(new PlayState());
+        	    LoadingState.loadAndSwitchState(new PlayState());
                 FlxTween.tween(warnText, {alpha: 0}, 1, {
                 });
-			}
-            else if (controls.BACK) 
-            {
-                {
-                    PlayState.animatedbgdisable = true;
-                    FlxG.sound.play(Paths.sound('cancelMenu'));
-                    PlayState.SONG = Song.loadFromJson('chosen', 'chosen');
-                    LoadingState.loadAndSwitchState(new PlayState());
-                    FlxTween.tween(warnText, {alpha: 0}, 1, {
-                    });
-                }
-		    }
+            }
+		}
 		super.update(elapsed);
    }
 }

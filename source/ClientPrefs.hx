@@ -7,6 +7,13 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs {
+	// Mobile Controls
+	public static var extraButtons:String = "NONE"; // mobile extra button option
+	public static var hitboxPos:Bool = true; // hitbox extra button position option
+	public static var controlsAlpha:Float = FlxG.onMobile ? 0.6 : 0;
+	public static var screensaver:Bool = false;
+	public static var hitboxType:String = "Gradient";
+
 	public static var downScroll:Bool = false;
 	public static var hitSound:Bool = false;
 	public static var shaders:Bool = true;
@@ -31,7 +38,7 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
-	public static var controllerMode:Bool = false;
+	public static var controllerMode:Bool = #if android true #else false #end;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'songspeed' => 1.0,
@@ -85,6 +92,14 @@ class ClientPrefs {
 	}
 
 	public static function saveSettings() {
+		/* // This really needs?
+		FlxG.save.data.extraButtons = extraButtons;
+		FlxG.save.data.hitboxPos = hitboxPos;
+		FlxG.save.data.controlsAlpha = controlsAlpha;
+		FlxG.save.data.screensaver = screensaver;
+		FlxG.save.data.hitboxType = hitboxType;
+		*/
+
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.hitSound = hitSound;
 		FlxG.save.data.reanimatedbf = reanimatedbf;
@@ -131,6 +146,8 @@ class ClientPrefs {
 	}
 
 	public static function loadPrefs() {
+		// nah
+
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}

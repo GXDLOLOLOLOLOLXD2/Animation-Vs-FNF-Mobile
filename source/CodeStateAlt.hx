@@ -23,10 +23,11 @@ import flixel.input.keyboard.FlxKey;
 import flixel.util.FlxTimer;
 import flixel.ui.FlxSpriteButton;
 import editors.ChartingState;
+import flixel.addons.ui.FlxInputText; // By FNF BR - Credits to HE!!
 
 using StringTools;
 
-class CodeState extends MusicBeatState
+class CodeStateAlt extends MusicBeatState
 {
     // sprites and text
     var windowPopUp:FlxSprite;
@@ -78,6 +79,7 @@ class CodeState extends MusicBeatState
 
         text = new FlxText(0, 0, FlxG.width, "", 20);
 		text.setFormat(Paths.font("tahoma.ttf"), 100, FlxColor.BLACK, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+        FlxG.stage.window.textInputEnabled = true; // By FNF BR - Credits to HE!!
 		text.screenCenter();
         text.x -= 70;
         text.y -= 21;

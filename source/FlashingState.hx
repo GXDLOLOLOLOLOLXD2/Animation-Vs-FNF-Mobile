@@ -26,37 +26,49 @@ class FlashingState extends MusicBeatState
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Hey there person man/woman   \n
 			This song contains some flashing and it may cause a headache,\n
-			Press Esc if you want to disable it or press Enter if you don't wanna disable it,\n
+			Press "B" if you want to disable it or press "A" if you don't wanna disable it,\n
 			\n
 			Hope you enjoy this song",
 			32);
 		warnText.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
 		warnText.screenCenter(Y);
 		add(warnText);
+
+		#if mobile
+		addTouchPad("NONE", "A_B");
+		#end
 	}
 
 	override function update(elapsed:Float)
 	{
-			if (FlxG.keys.justPressed.ENTER) {
+		#if mobile
+		var _enter = controls.ACCEPT // a
+		var _escape = controls.BACK // b
+		#else
+		var _enter = FlxG.keys.justPressed.ENTER
+		var _escape = FlxG.keys.justPressed.ESCAPE
+		#end
+		if (_enter)
+		{
+			PlayState.SONG = Song.loadFromJson('stickin-to-it', 'Stickin-To-It');
+            LoadingState.loadAndSwitchState(new PlayState());
+			ClientPrefs.flashing = true;
+			FlxG.sound.play(Paths.sound('cancelMenu'));
+            FlxTween.tween(warnText, {alpha: 0}, 1, {
+            });
+		}
+        if (_escape)
+        {
+            { // this { really needs?
 				PlayState.SONG = Song.loadFromJson('stickin-to-it', 'Stickin-To-It');
                 LoadingState.loadAndSwitchState(new PlayState());
-				ClientPrefs.flashing = true;
-				FlxG.sound.play(Paths.sound('cancelMenu'));
+				ClientPrefs.flashing = false;
+				ClientPrefs.saveSettings();
+                FlxG.sound.play(Paths.sound('cancelMenu'));
                 FlxTween.tween(warnText, {alpha: 0}, 1, {
                 });
-			}
-            if (FlxG.keys.justPressed.ESCAPE)
-            {
-                {
-					PlayState.SONG = Song.loadFromJson('stickin-to-it', 'Stickin-To-It');
-                    LoadingState.loadAndSwitchState(new PlayState());
-					ClientPrefs.flashing = false;
-					ClientPrefs.saveSettings();
-                    FlxG.sound.play(Paths.sound('cancelMenu'));
-                    FlxTween.tween(warnText, {alpha: 0}, 1, {
-                    });
-                }
-		    }
+            }
+		}
 		super.update(elapsed);
    }
 }

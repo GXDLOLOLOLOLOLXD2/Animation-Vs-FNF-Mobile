@@ -40,7 +40,8 @@ class HintState extends MusicBeatState
         FlxCamera.defaultCameras = [camOther];
 
 
-        if (ClientPrefs.shaders) {
+        if (ClientPrefs.shaders)
+        {
             chromeOffset /= 350;
             if (chromeOffset <= 0)
              setChrome(chromeOffset);
@@ -100,6 +101,8 @@ class HintState extends MusicBeatState
         chosenText.cameras = [camChosen];
 
         trace('hints lol');
+
+        addTouchPad("NONE", "A_B");
     }
 
     override function update(elapsed:Float)

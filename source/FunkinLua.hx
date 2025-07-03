@@ -30,6 +30,7 @@ import sys.io.File;
 import Type.ValueType;
 import Controls;
 import DialogueBoxPsych;
+import mobile.Util;
 
 #if desktop
 import Discord;
@@ -38,8 +39,8 @@ import Discord;
 using StringTools;
 
 class FunkinLua {
-	public static var Function_Stop = 1;
-	public static var Function_Continue = 0;
+	public static var Function_Stop = #if android "Function_Stop" #else 1 #end;
+	public static var Function_Continue = #if android "Function_Continue" #else 0 #end;
 
 	#if LUA_ALLOWED
 	public var lua:State = null;
@@ -169,12 +170,12 @@ class FunkinLua {
 		Lua_helper.add_callback(lua, "addLuaScript", function(luaFile:String, ?ignoreAlreadyRunning:Bool = false) { //would be dope asf. 
 			var cervix = luaFile + ".lua";
 			var doPush = false;
-			if(FileSystem.exists(Paths.modFolders(cervix))) {
+			if(Util.exists(Paths.modFolders(cervix))) {
 				cervix = Paths.modFolders(cervix);
 				doPush = true;
 			} else {
 				cervix = Paths.getPreloadPath(cervix);
-				if(FileSystem.exists(cervix)) {
+				if(Util.exists(cervix)) {
 					doPush = true;
 				}
 			}
@@ -1053,7 +1054,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startDialogue", function(dialogueFile:String, music:String = null) {
 			var path:String = Paths.modsJson(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
-			if(!FileSystem.exists(path)) {
+			if(!Util.exists(path)) {
 				path = Paths.json(Paths.formatToSongPath(PlayState.SONG.song) + '/' + dialogueFile);
 			}
 			luaTrace('Trying to load dialogue: ' + path);
@@ -1077,7 +1078,7 @@ class FunkinLua {
 		});
 		Lua_helper.add_callback(lua, "startVideo", function(videoFile:String) {
 			#if VIDEOS_ALLOWED
-			if(FileSystem.exists(Paths.video(videoFile))) {
+			if(Util.exists(Paths.video(videoFile))) {
 				PlayState.instance.startVideo(videoFile);
 			} else {
 				luaTrace('Video file not found: ' + videoFile);
@@ -1715,7 +1716,8 @@ class FunkinLua {
 	}
 	#end
 
-	public function stop() {
+	public function stop()
+	{
 		#if LUA_ALLOWED
 		if(lua == null) {
 			return;

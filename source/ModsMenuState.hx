@@ -31,6 +31,8 @@ import haxe.zip.Entry;
 import haxe.zip.Uncompress;
 import haxe.zip.Writer;*/
 
+import mobile.Util;
+
 using StringTools;
 
 class ModsMenuState extends MusicBeatState
@@ -88,7 +90,7 @@ class ModsMenuState extends MusicBeatState
 		visibleWhenNoMods.push(noModsTxt);
 
 		var path:String = 'modsList.txt';
-		if(FileSystem.exists(path))
+		if(Util.exists(path))
 		{
 			var leMods:Array<String> = CoolUtil.coolTextFile(path);
 			for (i in 0...leMods.length)
@@ -106,7 +108,7 @@ class ModsMenuState extends MusicBeatState
 
 		// FIND MOD FOLDERS
 		var boolshit = true;
-		if (FileSystem.exists("modsList.txt")){
+		if (Util.exists("modsList.txt")){
 			for (folder in Paths.getModDirectories())
 			{
 				if(!Paths.ignoreModFolders.contains(folder))
@@ -222,9 +224,6 @@ class ModsMenuState extends MusicBeatState
 
 		// more buttons
 		var startX:Int = 1100;
-		
-		
-		
 		
 		/*
 		installButton = new FlxButton(startX, 620, "Install Mod", function()
@@ -343,6 +342,8 @@ class ModsMenuState extends MusicBeatState
 		FlxG.mouse.visible = true;
 
 		super.create();
+
+		addTouchPad("UP_DOWN", "A_B");
 	}
 
 	function getIntArray(max:Int):Array<Int>{
@@ -418,7 +419,7 @@ class ModsMenuState extends MusicBeatState
 		}
 
 		var path:String = 'modsList.txt';
-		File.saveContent(path, fileStr);
+		Util.saveContent(path, fileStr);
 	}
 
 	var noModsSine:Float = 0;
@@ -433,21 +434,22 @@ class ModsMenuState extends MusicBeatState
 
 		if(canExit && controls.BACK)
 		{
-			if(colorTween != null) {
+			if(colorTween != null)
+			{
 				colorTween.cancel();
 			}
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			FlxG.mouse.visible = false;
 			saveTxt();
-			if(needaReset){
-			//MusicBeatState.switchState(new TitleState());
-			TitleState.initialized = false;
-			TitleState.closedState = false;
-			FlxG.sound.music.fadeOut(0.3);
-			FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
-			}else{
-			MusicBeatState.switchState(new MainMenuState());
-				
+			if(needaReset)
+			{
+				//MusicBeatState.switchState(new TitleState());
+				TitleState.initialized = false;
+				TitleState.closedState = false;
+				FlxG.sound.music.fadeOut(0.3);
+				FlxG.camera.fade(FlxColor.BLACK, 0.5, false, FlxG.resetGame, false);
+			} else {
+				MusicBeatState.switchState(new MainMenuState());	
 			}
 		}
 
@@ -691,8 +693,8 @@ class ModMetadata
 		
 		//Try loading json
 		var path = Paths.mods(folder + '/pack.json');
-		if(FileSystem.exists(path)) {
-			var rawJson:String = File.getContent(path);
+		if(Util.exists(path)) {
+			var rawJson:String = Util.getContent(path);
 			if(rawJson != null && rawJson.length > 0) {
 				var stuff:Dynamic = Json.parse(rawJson);
 					//using reflects cuz for some odd reason my haxe hates the stuff.var shit

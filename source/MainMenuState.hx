@@ -91,15 +91,16 @@ class MainMenuState extends MusicBeatState
 
 		persistentUpdate = persistentDraw = true;
 
-		if (ClientPrefs.shaders) {
-		chromeOffset /= 350;
-		if (chromeOffset <= 0)
-		 setChrome(0.0);
-		else
+		if (ClientPrefs.shaders)
 		{
-		setChrome(chromeOffset);
-		}	
-	}
+			chromeOffset /= 350;
+			if (chromeOffset <= 0)
+			 	setChrome(0.0);
+			else
+			{
+			setChrome(chromeOffset);
+			}	
+		}
 
 		FlxG.camera.setFilters([ShadersHandler.chromaticAberration]);
 		camGame.setFilters([ShadersHandler.chromaticAberration]);
@@ -128,8 +129,6 @@ class MainMenuState extends MusicBeatState
 		glitchFrame.y -= 30;
 		glitchFrame.alpha = 0;
 		add(glitchFrame);
-
-
 
 		menusprite = new FlxSprite().loadGraphic(Paths.image(''));
         menusprite.updateHitbox();
@@ -231,7 +230,6 @@ class MainMenuState extends MusicBeatState
 		secretItem.screenCenter();
 		secretItem.x += 230;
 		secretItem.y += 300;
-		
 
 		codeMenu = new FlxSpriteButton(875, 452, null, function()
             {
@@ -275,6 +273,8 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		super.create();
+
+		addTouchPad("UP_DOWN", "A_B");
 	}
 
 	#if ACHIEVEMENTS_ALLOWED
@@ -316,8 +316,9 @@ class MainMenuState extends MusicBeatState
                 glitchFrame.alpha = 1;
 				menusprite.alpha = 0;
 				frame.alpha = 0;
-				if (ClientPrefs.shaders) {
-				setChrome(chromeOffset);
+				if (ClientPrefs.shaders)
+				{
+					setChrome(chromeOffset);
 				}
         }
 
@@ -437,14 +438,7 @@ class MainMenuState extends MusicBeatState
 									case 'freeplay':
 										MusicBeatState.switchState(new SongSelectionState());
 									case 'secret':
-										if (FlxG.save.data.unlockedSecret ==true)
-										{
-											MusicBeatState.switchState(new CodeState());
-										}
-										else if (FlxG.save.data.unlockedSecret ==false) 
-										{
-											FlxG.camera.shake();
-										}
+										MusicBeatState.switchState(new CodeStateAlt()); // credits to FNF BR
 									case 'credits':
 										MusicBeatState.switchState(new CreditsState()); 
 									case 'options':

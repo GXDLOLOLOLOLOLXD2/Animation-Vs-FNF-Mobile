@@ -232,6 +232,8 @@ class SongSelectionState extends MusicBeatState
 		#end
 
 		super.create();
+
+		addTouchPad("LEFT_RIGHT", "A_B");
 	}
 
 	#if ACHIEVEMENTS_ALLOWED

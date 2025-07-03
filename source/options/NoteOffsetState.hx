@@ -197,6 +197,11 @@ class NoteOffsetState extends MusicBeatState
 		FlxG.sound.playMusic(Paths.music('offsetSong'), 1, true);
 
 		super.create();
+
+		#if mobile
+		addTouchPad("LEFT_RIGHT", "A_B_C");
+		addTouchPadCamera();
+		#end
 	}
 
 	var holdTime:Float = 0;
@@ -208,6 +213,12 @@ class NoteOffsetState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		#if mobile
+		var _buttonC = touchPad.buttonC.justPressed
+		#else
+		var _buttonC = controls.RESET
+		#end
+
 		var addNum:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) addNum = 10;
 
@@ -295,7 +306,7 @@ class NoteOffsetState extends MusicBeatState
 				}
 			}
 
-			if(controls.RESET)
+			if(_buttonC) // c
 			{
 				for (i in 0...ClientPrefs.comboOffset.length)
 				{

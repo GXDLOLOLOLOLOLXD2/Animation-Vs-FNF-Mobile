@@ -26,7 +26,8 @@ class AchievementsMenuState extends MusicBeatState
 	private var achievementIndex:Array<Int> = [];
 	private var descText:FlxText;
 
-	override function create() {
+	override function create()
+	{
 		#if desktop
 		DiscordClient.changePresence("Achievements Menu", null);
 		#end
@@ -71,6 +72,8 @@ class AchievementsMenuState extends MusicBeatState
 		changeSelection();
 
 		super.create();
+
+		addTouchPad("UP_DOWN", "B");
 	}
 
 	override function update(elapsed:Float) {

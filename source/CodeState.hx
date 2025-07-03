@@ -31,13 +31,13 @@ class CodeState extends MusicBeatState
   var noTxt:FlxText;
   override function create()
   {
-
     FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
-	FlxG.sound.music.fadeIn(1, 0, 0.8);
+	  FlxG.sound.music.fadeIn(1, 0, 0.8);
 
     FlxG.mouse.visible = true;
 
     codeInput = new FlxInputText(500, 350,FlxG.width,"enter code",32,FlxColor.WHITE,FlxColor.TRANSPARENT);
+    codeInput.focusGained = () -> FlxG.stage.window.textInputEnabled = true; // <-- this line is by FNF BR - Credits to he!!!
     codeInput.screenCenter();
     codeInput.scrollFactor.set();
     codeInput.background = false;
@@ -114,6 +114,8 @@ class CodeState extends MusicBeatState
     FlxG.mouse.visible=true;
 
     super.create();
+
+    addTouchPad("NONE", "A_B");
   }
   var timer:Float = 0;
 
@@ -130,7 +132,7 @@ class CodeState extends MusicBeatState
         FlxG.mouse.visible=true;
     }
 
-    if(FlxG.keys.justPressed.ESCAPE && codeInput.hasFocus){
+    if(controls.BACK && codeInput.hasFocus){
         codeInput.hasFocus=false;
     }
 

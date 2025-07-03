@@ -68,7 +68,8 @@ class ControlsSubState extends MusicBeatSubstate {
 	var rebindingKey:Bool = false;
 	var nextAccept:Int = 5;
 
-	public function new() {
+	public function new()
+	{
 		super();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBG'));
@@ -112,29 +113,39 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		}
 		changeSelection();
+
+		#if mobile
+		addTouchPad("LEFT_FULL", "A_B");
+		#end
 	}
 
 	var leaving:Bool = false;
 	var bindingTime:Float = 0;
 	override function update(elapsed:Float) {
-		if(!rebindingKey) {
-			if (controls.UI_UP_P) {
+		if(!rebindingKey)
+		{
+			if (controls.UI_UP_P) // up
+			{
 				changeSelection(-1);
 			}
-			if (controls.UI_DOWN_P) {
+			if (controls.UI_DOWN_P) // down
+			{
 				changeSelection(1);
 			}
-			if (controls.UI_LEFT_P || controls.UI_RIGHT_P) {
+			if (controls.UI_LEFT_P || controls.UI_RIGHT_P) // left and right
+			{ 
 				changeAlt();
 			}
 
-			if (controls.BACK) {
+			if (controls.BACK)// b
+			{
 				ClientPrefs.reloadControls();
 				close();
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 			}
 
-			if(controls.ACCEPT && nextAccept <= 0) {
+			if(controls.ACCEPT && nextAccept <= 0)// a
+			{
 				if(optionShit[curSelected][0] == defaultKey) {
 					ClientPrefs.keyBinds = ClientPrefs.defaultKeys.copy();
 					reloadKeys();
@@ -153,7 +164,8 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		} else {
 			var keyPressed:Int = FlxG.keys.firstJustPressed();
-			if (keyPressed > -1) {
+			if (keyPressed > -1)
+			{
 				var keysArray:Array<FlxKey> = ClientPrefs.keyBinds.get(optionShit[curSelected][1]);
 				keysArray[curAlt ? 1 : 0] = keyPressed;
 
@@ -169,7 +181,8 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 
 			bindingTime += elapsed;
-			if(bindingTime > 5) {
+			if(bindingTime > 5)
+			{
 				if (curAlt) {
 					grpInputsAlt[curSelected].alpha = 1;
 				} else {
@@ -181,7 +194,8 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		}
 
-		if(nextAccept > 0) {
+		if(nextAccept > 0)
+		{
 			nextAccept -= 1;
 		}
 		super.update(elapsed);

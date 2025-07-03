@@ -125,6 +125,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
+
+		#if mobile
+		addTouchPad("LEFT_FULL", "A_B_C");
+		#end
 	}
 
 	public function addOption(option:Option) {
@@ -137,16 +141,22 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	var holdValue:Float = 0;
 	override function update(elapsed:Float)
 	{
-		if (controls.UI_UP_P)
+		#if mobile
+		var _buttonC = touchPad.buttonC.justPressed
+		#else
+		var _buttonC = controls.RESET
+		#end
+
+		if (controls.UI_UP_P) // up
 		{
 			changeSelection(-1);
 		}
-		if (controls.UI_DOWN_P)
+		if (controls.UI_DOWN_P) // down
 		{
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
+		if (controls.BACK) { // b
 			close();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 		}
@@ -161,7 +171,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 			if(usesCheckbox)
 			{
-				if(controls.ACCEPT)
+				if(controls.ACCEPT) // a
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					curOption.setValue((curOption.getValue() == true) ? false : true);
@@ -169,7 +179,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					reloadCheckboxes();
 				}
 			} else {
-				if(controls.UI_LEFT || controls.UI_RIGHT) {
+				if(controls.UI_LEFT || controls.UI_RIGHT) { // left and right
 					var pressed = (controls.UI_LEFT_P || controls.UI_RIGHT_P);
 					if(holdTime > 0.5 || pressed) {
 						if(pressed) {
@@ -235,12 +245,12 @@ class BaseOptionsMenu extends MusicBeatSubstate
 					if(curOption.type != 'string') {
 						holdTime += elapsed;
 					}
-				} else if(controls.UI_LEFT_R || controls.UI_RIGHT_R) {
+				} else if(controls.UI_LEFT_R || controls.UI_RIGHT_R) { // left and right
 					clearHold();
 				}
 			}
 
-			if(controls.RESET)
+			if(_buttonC) // c
 			{
 				for (i in 0...optionsArray.length)
 				{

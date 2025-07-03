@@ -24,7 +24,7 @@ jobs:
       - name: Setup Java JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 17
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
@@ -33,6 +33,18 @@ jobs:
         uses: krdlab/setup-haxe@v1.1.5
         with:
           haxe-version: 4.2.5
+
+      - name: Restore existing build cache for faster compilation
+        uses: actions/cache@v3
+        with:
+          # not caching the bin folder to prevent asset duplication and stuff like that
+          key: cache-build-android
+          path: |
+            .haxelib/
+            export/release/android/haxe/
+            export/release/android/obj/
+          restore-keys: |
+            cache-build-android
 
       - name: Install Haxelibs
         run: |
@@ -67,5 +79,5 @@ jobs:
       - name: Publish Build
         uses: actions/upload-artifact@v4
         with:
-          name: fnf-mobile-apk
+          name: VsAnimationBuild
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk

@@ -132,6 +132,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
+
+		addTouchPad("LEFT_FULL", "A_B_C");
+		addTouchPadCamera();
 	}
 
 	var nextAccept:Int = 5;
@@ -243,7 +246,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET)
+			#if mobile
+			var reset = touchPad.buttonC.justPressed
+			#else
+			var reset = controls.RESET
+			#end
+			if(reset)
 			{
 				for (i in 0...optionsArray.length)
 				{

@@ -58,9 +58,9 @@ class CreditsState extends MusicBeatState
 		for (folder in Paths.getModDirectories())
 		{
 			var creditsFile:String = Paths.mods(folder + '/data/credits.txt');
-			if (FileSystem.exists(creditsFile))
+			if (Util.exists(creditsFile))
 			{
-				var firstarray:Array<String> = File.getContent(creditsFile).split('\n');
+				var firstarray:Array<String> = Util.getContent(creditsFile).split('\n');
 				for(i in firstarray)
 				{
 					var arr:Array<String> = i.replace('\\n', '\n').split("::");
@@ -73,6 +73,8 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Android Port']
+			['Your Name', 'Your Icon', 'Hi, I ported this mod', 'Your Link', '0x16A4EB'] // Blue/Cyan IDK BG
 			['Animation VS FNF Team'],
 			['Sir Chapurato', 			'sirchap',			'Director and Charter',			'https://www.youtube.com/channel/UC37f51A8bNepi7PvD8owOxQ'],
 			['Salty Sovet',			'funnisovet',			'Lead coder and Co-Director', 			'https://www.youtube.com/channel/UC1qT2vh0aORFdHA4cVAHZUw'],
@@ -156,6 +158,9 @@ class CreditsState extends MusicBeatState
 
 		changeSelection();
 		super.create();
+
+		addTouchPad("UP_DOWN", "A_B");
+		addTouchPadCamera();
 	}
 
 	override function update(elapsed:Float)

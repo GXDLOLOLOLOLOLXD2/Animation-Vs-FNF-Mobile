@@ -9,6 +9,7 @@ import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
 import Song;
+import mobile.Util;
 
 using StringTools;
 
@@ -66,10 +67,10 @@ class StageData {
 
 		#if MODS_ALLOWED
 		var modPath:String = Paths.modFolders('stages/' + stage + '.json');
-		if(FileSystem.exists(modPath)) {
-			rawJson = File.getContent(modPath);
-		} else if(FileSystem.exists(path)) {
-			rawJson = File.getContent(path);
+		if(Util.exists(modPath)) {
+			rawJson = Util.getContent(modPath);
+		} else if(Util.exists(path)) {
+			rawJson = Util.getContent(path);
 		}
 		#else
 		if(Assets.exists(path)) {

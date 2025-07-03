@@ -37,18 +37,25 @@ class OptionsState extends MusicBeatState
 	function openSelectedSubstate(label:String) {
 		switch(label) {
 			case 'Animation VS FNF Options':
+				removeTouchPad();
 				openSubState(new options.AVFSettingsSubState());
 			case 'Note Colors':
+				removeTouchPad();
 				openSubState(new options.NotesSubState());
 			case 'Controls':
+				removeTouchPad();
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':
+				removeTouchPad();
 				openSubState(new options.GraphicsSettingsSubState());
 			case 'Visuals and UI':
+				removeTouchPad();
 				openSubState(new options.VisualsUISubState());
 			case 'Gameplay':
+				removeTouchPad();
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
+				removeTouchPad();
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
 		}
 	}
@@ -56,7 +63,8 @@ class OptionsState extends MusicBeatState
 	var selectorLeft:Alphabet;
 	var selectorRight:Alphabet;
 
-	override function create() {
+	override function create()
+	{
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
@@ -87,33 +95,62 @@ class OptionsState extends MusicBeatState
 		selectorRight = new Alphabet(0, 0, '<', true, false);
 		add(selectorRight);
 
+		#if android // credits to FNF BR
+		var tipText:FlxText = new FlxText(10, FlxG.height - 24, 0, 'Press X to Go In Controls Menu or Y to Controls Settings', 16);
+		tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		tipText.borderSize = 2;
+		tipText.scrollFactor.set();
+		add(tipText);
+		#end
+
 		changeSelection();
 		ClientPrefs.saveSettings();
 
 		super.create();
+
+		//#if mobile
+		addTouchPad("UP_DOWN", "A_B_X_Y");
+		//#end
 	}
 
-	override function closeSubState() {
+	override function closeSubState()
+	{
 		super.closeSubState();
 		ClientPrefs.saveSettings();
+		removeTouchPad();
+		addTouchPad("UP_DOWN", "A_B_X_Y");
 	}
 
-	override function update(elapsed:Float) {
+	override function update(elapsed:Float)
+	{
 		super.update(elapsed);
 
-		if (controls.UI_UP_P) {
+		if (controls.UI_UP_P) { // up
 			changeSelection(-1);
 		}
-		if (controls.UI_DOWN_P) {
+		if (controls.UI_DOWN_P) { // down
 			changeSelection(1);
 		}
 
-		if (controls.BACK) {
+		if (touchPad != null && touchPad.buttonX.justPressed) {
+			touchPad.active = touchPad.visible = persistentUpdate = false;
+			openSubState(new mobile.MobileControlSelectSubState());
+		}
+
+		if (touchPad != null && touchPad.buttonY.justPressed) {
+			boiText.alpha = 0;
+			boiImage.alpha = 0;
+			boiText2.alpha = 0;
+			touchPad.active = touchPad.visible = persistentUpdate = false;
+			openSubState(new mobile.options.MobileOptionsSubState());
+		}
+
+		if (controls.BACK) { // b
 			FlxG.sound.play(Paths.sound('cancelMenu'));
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
-		if (controls.ACCEPT) {
+		if (controls.ACCEPT) { // a
 			openSelectedSubstate(options[curSelected]);
 		}
 	}

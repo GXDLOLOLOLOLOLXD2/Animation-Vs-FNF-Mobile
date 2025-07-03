@@ -187,11 +187,19 @@ class FreeplayState extends MusicBeatState
 		text.scrollFactor.set();
 		add(text);
 		super.create();
+
+		//#if mobile
+		addTouchPad("LEFT_FULL", "A_B_X_Y"); // Test
+		addTouchPadCamera();
+		//#end
 	}
 
 	override function closeSubState() {
 		changeSelection(0, false);
 		super.closeSubState();
+		removeTouchPad();
+		addTouchPad("LEFT_FULL", "A_B_X_Y");
+		addTouchPadCamera();
 	}
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
@@ -244,11 +252,21 @@ class FreeplayState extends MusicBeatState
 		scoreText.text = 'PERSONAL BEST: ' + lerpScore + ' (' + ratingSplit.join('.') + '%)';
 		positionHighscore();
 
-		var upP = controls.UI_UP_P;
-		var downP = controls.UI_DOWN_P;
-		var accepted = controls.ACCEPT;
+		#if mobile
+		// no implemention for mobile of x/shift
+		var space = touchPad.buttonX.justPressed; // X replace space function
+		var ctrl = touchPad.buttonY.justPressed; // Y replace ctrl function
+		#else
+		var _xshift = FlxG.keys.pressed.SHIFT
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
+		#end
+		var leftP = controls.UI_LEFT_P; // right
+		var rightP = controls.UI_RIGHT_P; // right
+		var upP = controls.UI_UP_P; // up
+		var downP = controls.UI_DOWN_P; // down
+		var accepted = controls.ACCEPT; // a
+		var _back = controls.BACK; // b
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
@@ -262,13 +280,13 @@ class FreeplayState extends MusicBeatState
 			changeSelection(shiftMult);
 		}
 
-		if (controls.UI_LEFT_P)
+		if (leftP)
 			changeDiff(-1);
-		else if (controls.UI_RIGHT_P)
+		else if (rightP)
 			changeDiff(1);
 		else if (upP || downP) changeDiff();
 
-		if (controls.BACK)
+		if (_back)
 		{
 			if(colorTween != null) {
 				colorTween.cancel();
@@ -280,6 +298,7 @@ class FreeplayState extends MusicBeatState
 		if(ctrl)
 		{
 			openSubState(new GameplayChangersSubstate());
+			removeTouchPad();
 		}
 		else if(space)
 		{
@@ -331,10 +350,12 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			
-			if (FlxG.keys.pressed.SHIFT){
+			if (_xshift){
 				LoadingState.loadAndSwitchState(new ChartingState());
+				removeTouchPad();
 			}else{
 				LoadingState.loadAndSwitchState(new PlayState());
+				removeTouchPad();
 			}
 
 			FlxG.sound.music.volume = 0;
