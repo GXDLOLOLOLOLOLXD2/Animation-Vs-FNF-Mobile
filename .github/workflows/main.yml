@@ -1,7 +1,7 @@
-name: Android Build
+name: Android Main Build
 on:
-  push:
-    branches: ['mobile']
+  #push:
+  #  branches: ['mobile']
   workflow_dispatch:
 jobs:
   build:
