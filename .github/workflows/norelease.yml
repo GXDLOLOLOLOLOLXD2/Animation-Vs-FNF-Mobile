@@ -1,9 +1,9 @@
 name: Android No Release
 on: 
   push:
-    branches: [ "main" ]
+    branches: [ "mobile" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "mobile" ]
 
   workflow_dispatch:
 
