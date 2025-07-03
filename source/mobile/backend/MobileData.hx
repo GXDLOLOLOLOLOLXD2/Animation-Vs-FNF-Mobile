@@ -41,6 +41,8 @@ import mobile.options.*;
 import mobile.extras.*;
 import mobile.pyschlua.*;
 
+import mobile.objects.TouchPad;
+
 import mobile.Util;
 
 using StringTools;
