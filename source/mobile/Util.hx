@@ -1,4 +1,4 @@
-package source.mobile;
+package mobile;
 
 #if sys
 import sys.FileSystem;
@@ -234,7 +234,7 @@ class MultipleUtil
 	}
 
     // ---- Idklool Methods ----
-    public static var path:String = System.applicationStorageDirectory;
+    // public static var path:String = System.applicationStorageDirectory;
   
     public static function getLOLContent(id:String):String // getContent
     {

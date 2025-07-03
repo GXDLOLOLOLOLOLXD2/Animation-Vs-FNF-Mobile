@@ -20,6 +20,7 @@ import mobile.objects.IMobileControls;
 import mobile.objects.Hitbox;
 import mobile.objects.TouchPad;
 import flixel.util.FlxDestroyUtil;
+import flixel.FlxCamera;
 #end
 
 class MusicBeatState extends FlxUIState

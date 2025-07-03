@@ -17,7 +17,7 @@ import haxe.Exception;
 using StringTools;
 import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxInputText;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
