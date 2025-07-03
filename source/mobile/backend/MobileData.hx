@@ -33,6 +33,14 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 import mobile.Util;
 
 using StringTools;

@@ -38,6 +38,13 @@ import mobile.input.MobileInputID;
 import mobile.input.MobileInputManager;
 
 import mobile.objects.IMobileControls;
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
 
 /**
  * A zone with 4 hint's (A hitbox).

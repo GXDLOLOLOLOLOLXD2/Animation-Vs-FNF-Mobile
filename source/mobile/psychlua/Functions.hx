@@ -22,6 +22,15 @@
 
 package mobile.psychlua;
 
+/*
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 import psychlua.CustomSubstate;
 #if LUA_ALLOWED
 import lime.ui.Haptic;
@@ -30,10 +39,8 @@ import psychlua.LuaUtils;
 import mobile.backend.TouchUtil;
 #if android import mobile.backend.PsychJNI; #end
 
-/**
- * ...
- * @author: Karim Akra and Lily Ross (mcagabe19)
- */
+// @author: Karim Akra and Lily Ross (mcagabe19)
+
 class MobileFunctions
 {
 	public static function implement(funk:FunkinLua)
@@ -368,7 +375,7 @@ class AndroidFunctions
 
 		Lua_helper.add_callback(lua, "minimizeWindow", () -> AndroidTools.minimizeWindow());
 
-		Lua_helper.add_callback(lua, "showToast", function(text:String, ?duration:Int, ?xOffset:Int, ?yOffset:Int) /* , ?gravity:Int*/
+		Lua_helper.add_callback(lua, "showToast", function(text:String, ?duration:Int, ?xOffset:Int, ?yOffset:Int) // , ?gravity:Int
 		{
 			if (text == null)
 				return FunkinLua.luaTrace('showToast: No text specified.');
@@ -406,3 +413,6 @@ class AndroidFunctions
 }
 #end
 #end
+*/
+
+// Removed

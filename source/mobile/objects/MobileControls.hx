@@ -28,6 +28,13 @@ import flixel.util.FlxDestroyUtil;
 import mobile.objects.Hitbox;
 import mobile.objects.TouchPad;
 import mobile.input.MobileInputManager;
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
 
 /**
  * ...

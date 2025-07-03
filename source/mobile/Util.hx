@@ -18,6 +18,16 @@ import haxe.crypto.Md5;
 import lime.system.System;
 import haxe.io.Path;
 
+// For Compatibility:
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+// XD
+
 /*
  * A file for internal founder and multiples folders list
  * author: @GXDLOLOLOLOLOLXD2, azeitona-x7 and Idklool for the extra utils... XD

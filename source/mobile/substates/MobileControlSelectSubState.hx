@@ -41,6 +41,14 @@ import mobile.objects.Alphabet;
 import *;
 import options.*;
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 using StringTools;
 
 class MobileControlSelectSubState extends MusicBeatSubstate

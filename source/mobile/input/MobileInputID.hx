@@ -24,6 +24,14 @@ package mobile.input;
 
 import flixel.system.macros.FlxMacroUtil;
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 /**
  * A high-level list of unique values for mobile input buttons.
  * Maps enum values and strings to unique integer codes

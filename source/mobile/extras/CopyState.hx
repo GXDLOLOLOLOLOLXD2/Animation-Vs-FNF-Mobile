@@ -20,7 +20,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package mobile;
+package mobile.extras;
 
 #if mobile
 import lime.utils.Assets as LimeAssets;
@@ -38,6 +38,13 @@ import flixel.ui.FlxBar.FlxBarFillDirection;
 import sys.io.File;
 import sys.FileSystem;
 #end
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
 using StringTools;
 
 /**

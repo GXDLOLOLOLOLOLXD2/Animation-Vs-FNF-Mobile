@@ -27,6 +27,14 @@ import flixel.FlxCamera;
 import flixel.FlxObject;
 import flixel.input.touch.FlxTouch;
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 /**
  * ...
  * @author: Karim Akra

@@ -27,6 +27,13 @@ import options.*;
 #if sys
 import sys.io.File;
 #end
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
 
 class MobileOptionsSubState extends BaseOptionsMenu
 {

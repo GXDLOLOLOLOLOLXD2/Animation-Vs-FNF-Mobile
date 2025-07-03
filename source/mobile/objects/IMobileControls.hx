@@ -24,6 +24,14 @@ package mobile.objects;
 
 import flixel.util.FlxSignal.FlxTypedSignal;
 import mobile.input.MobileInputManager;
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 
 /**
  * ...

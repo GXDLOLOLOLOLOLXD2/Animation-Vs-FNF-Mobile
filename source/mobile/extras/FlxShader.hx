@@ -1,6 +1,13 @@
-package mobile;
+package mobile.extras;
 
 import flixel.system.FlxAssets.FlxShader as OriginalFlxShader;
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
 
 using StringTools;
 

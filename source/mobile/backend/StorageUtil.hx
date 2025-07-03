@@ -39,6 +39,14 @@ import sys.io.File;
 import sys.FileSystem;
 #end
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 using StringTools;
 
 /**
@@ -55,9 +63,9 @@ class StorageUtil
 	{
 		var daPath:String = '';
 		#if android
-		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
-			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
-		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
+		if (!Util.exists(rootDir + 'storagetype.txt'))
+			Util.saveContent(rootDir + 'storagetype.txt', ClientPrefs.storageType);
+		var curStorageType:String = Util.getContent(rootDir + 'storagetype.txt');
 		daPath = force ? StorageType.fromStrForce(curStorageType) : StorageType.fromStr(curStorageType);
 		daPath = Path.addTrailingSlash(daPath);
 		#elseif ios
@@ -73,10 +81,10 @@ class StorageUtil
 	{
 		try
 		{
-			if (!FileSystem.exists('saves'))
+			if (!Util.exists('saves'))
 				FileSystem.createDirectory('saves');
 
-			File.saveContent('saves/$fileName', fileData);
+			Util.saveContent('saves/$fileName', fileData);
 			if (alert)
 				CoolUtil.showPopUp('$fileName has been saved.', "Success!");
 		}

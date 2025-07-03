@@ -39,6 +39,14 @@ import flixel.input.mouse.FlxMouseButton;
 import mobile.input.MobileInputID;
 import mobile.extras.FlxShader;
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 /**
  * A simple button class that calls a function when clicked by the touch.
  * @author: Karim Akra and Lily Ross (mcagabe19)

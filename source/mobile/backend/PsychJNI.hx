@@ -22,6 +22,14 @@
 
 package mobile.backend;
 
+import mobile.*;
+import mobile.backend.*;
+import mobile.input.*;
+import mobile.substates.*;
+import mobile.options.*;
+import mobile.extras.*;
+import mobile.pyschlua.*;
+
 /**
  * ...
  * @author Lily Ross (mcagabe19)
