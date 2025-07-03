@@ -1,7 +1,7 @@
 name: Android Main Build
 on:
-  #push:
-  #  branches: ['mobile']
+  push:
+    branches: ['mobile']
   workflow_dispatch:
 jobs:
   build:
@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pulling the new commit
-        uses: actions/checkout@v2
+        uses: actions/checkout@main #v2
       - name: Setting up Haxe
-        uses: krdlab/setup-haxe@v1
+        uses: krdlab/setup-haxe@main #v1
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.6 # 4.2.5
       - name: Setting up Android NDK
         id: setup-ndk
         uses: nttld/setup-ndk@main
@@ -51,7 +51,7 @@ jobs:
       - name: Building the game
         run: haxelib run lime build android
       - name: Uploading artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@main #v4
         with:
           name: VsAnimationBuild
           path: export/release/android/bin/app/build/outputs/apk/release/*.apk
