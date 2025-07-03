@@ -35,9 +35,11 @@ jobs:
       - name: Installing required Haxelibs
         run: |
           haxelib setup ~/haxelib
-          haxelib install flixel
+          haxelib install flixel 5.3.1
+          haxelib set flixel 5.3.1
           haxelib install flixel-addons
-          haxelib install flixel-ui
+          haxelib install flixel-ui 2.6.4
+          haxelib set flixel-ui 2.6.4
           haxelib install hscript
           haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git
           haxelib install hxcpp-debug-server
