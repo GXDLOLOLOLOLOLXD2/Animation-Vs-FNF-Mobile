@@ -120,7 +120,7 @@ class Paths
 	public static function getSharedPath():String
 	{
 		// return "storage/emulated/0/VsAnimation";
-		return "assets"
+		return "assets";
 	}
 	public static function getGlobalMods():String
 	{
