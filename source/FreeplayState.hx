@@ -323,8 +323,9 @@ class FreeplayState extends MusicBeatState
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices && vocalsSound != null) {
 					FlxG.sound.list.add(voxSnd); // please return Sound but no String plspls
-				//else
+				}//else {
 					//vocals = new FlxSound();
+				//}
 				
 				FlxG.sound.list.add(musicSnd);
 				FlxG.sound.playMusic(musicSnd); // please return Sound but no String plspls

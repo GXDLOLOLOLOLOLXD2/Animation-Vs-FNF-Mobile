@@ -119,7 +119,7 @@ class CoolUtil
 	//uhhhh does this even work at all? i'm starting to doubt
 	public static function precacheSound(sound:String, ?library:String = null):Void
 	{
-		var path = Paths.sound(sound, library, true); // Return string
+		var path = Paths.sound(sound, library);
 		if (!Assets.cache.hasSound(path)) {
 			FlxG.sound.cache(path);
 		}
