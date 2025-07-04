@@ -24,12 +24,13 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import mobile.substates.MobileControlSelectSubState;
 
 using StringTools;
 
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Animation VS FNF Options', 'Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Animation VS FNF Options', 'Mobile Settings', 'Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -39,6 +40,9 @@ class OptionsState extends MusicBeatState
 			case 'Animation VS FNF Options':
 				removeTouchPad();
 				openSubState(new options.AVFSettingsSubState());
+			case 'Mobile Settings':
+				removeTouchPad();
+				openSubState(new options.MobileSettingsSubState());
 			case 'Note Colors':
 				removeTouchPad();
 				openSubState(new options.NotesSubState());
@@ -138,9 +142,6 @@ class OptionsState extends MusicBeatState
 		}
 
 		if (touchPad != null && touchPad.buttonY.justPressed) {
-			boiText.alpha = 0;
-			boiImage.alpha = 0;
-			boiText2.alpha = 0;
 			touchPad.active = touchPad.visible = persistentUpdate = false;
 			openSubState(new mobile.options.MobileOptionsSubState());
 		}

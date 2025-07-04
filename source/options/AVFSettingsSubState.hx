@@ -35,10 +35,10 @@ class AVFSettingsSubState extends BaseOptionsMenu
 		rpcTitle = 'Gameplay Settings Menu'; //for Discord Rich Presence
 		
 		var option:Option = new Option('Toggle ReAnimated BF',
-		'If checked, boyfriends skin will be replaced with re-animated bf (smoother)',
-		'reanimatedbf',
-		'bool',
-		false);
+			'If checked, boyfriends skin will be replaced with re-animated bf (smoother)',
+			'reanimatedbf',
+			'bool',
+			false);
 		addOption(option);
 		
 		//I'd suggest using "Downscroll" as an example for making your own option since it is the simplest here
@@ -62,8 +62,6 @@ class AVFSettingsSubState extends BaseOptionsMenu
 			'bool', //Variable type
 			true); //Default value
 		addOption(option);
-
-
 
 		super();
 	}

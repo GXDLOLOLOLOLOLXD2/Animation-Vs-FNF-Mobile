@@ -45,8 +45,8 @@ class Util // MultipleUtil
         // watermark.setFormat(null, fontSize, FlxColor.WHITE, "left", FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         return watermark;
     }
-
-	public static function createWatermarkLeft(text:String, fontSize:Int = 25, offsetX:Float =664, offsetY:Float = 12):FlxText
+    
+    public static function createWatermarkLeft(text:String, fontSize:Int = 25, offsetX:Float =664, offsetY:Float = 12):FlxText
     {
         var xPos:Float = FlxG.width * (offsetX / 1280);
         var yPos:Float = FlxG.height * (offsetY / 720);
@@ -202,7 +202,7 @@ class Util // MultipleUtil
 				FileSystem.deleteFile(path);
 			}
 		} else if (Std.isOfType(path, Array)) {
-			for (file in cast(path, Array<String>)) {
+			for (file in cast(path, Array<Dynamic>)) { // or can be: for (file in (cast path : Array<Dynamic>)) {
 				if (FileSystem.exists(file)) {
 					FileSystem.deleteFile(file);
 				}

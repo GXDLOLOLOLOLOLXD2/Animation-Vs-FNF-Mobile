@@ -26,7 +26,7 @@ class FlashingState extends MusicBeatState
 		warnText = new FlxText(0, 0, FlxG.width,
 			"Hey there person man/woman   \n
 			This song contains some flashing and it may cause a headache,\n
-			Press "B" if you want to disable it or press "A" if you don't wanna disable it,\n
+			Press B if you want to disable it or press A if you don't wanna disable it,\n
 			\n
 			Hope you enjoy this song",
 			32);

@@ -38,7 +38,7 @@ class ClientPrefs {
 	public static var scoreZoom:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
-	public static var controllerMode:Bool = #if android true #else false #end;
+	public static var controllerMode:Bool = #if mobile true #else false #end;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'songspeed' => 1.0,
@@ -91,15 +91,16 @@ class ClientPrefs {
 		//trace(defaultKeys);
 	}
 
-	public static function saveSettings() {
-		/* // This really needs?
+	public static function saveSettings()
+	{
+		// Mobile Funtions :D
 		FlxG.save.data.extraButtons = extraButtons;
 		FlxG.save.data.hitboxPos = hitboxPos;
 		FlxG.save.data.controlsAlpha = controlsAlpha;
 		FlxG.save.data.screensaver = screensaver;
 		FlxG.save.data.hitboxType = hitboxType;
-		*/
 
+		// Mod and Psych Engine Functions :P
 		FlxG.save.data.downScroll = downScroll;
 		FlxG.save.data.hitSound = hitSound;
 		FlxG.save.data.reanimatedbf = reanimatedbf;
@@ -112,8 +113,10 @@ class ClientPrefs {
 		FlxG.save.data.noteSplashes = noteSplashes;
 		FlxG.save.data.lowQuality = lowQuality;
 		FlxG.save.data.framerate = framerate;
-		//FlxG.save.data.cursing = cursing;
-		//FlxG.save.data.violence = violence;
+
+		FlxG.save.data.cursing = cursing; // this really needs?
+		FlxG.save.data.violence = violence; // this really needs?
+
 		FlxG.save.data.camZooms = camZooms;
 		FlxG.save.data.noteOffset = noteOffset;
 		FlxG.save.data.hideHud = hideHud;
@@ -145,12 +148,28 @@ class ClientPrefs {
 		FlxG.log.add("Settings saved!");
 	}
 
-	public static function loadPrefs() {
-		// nah
-
+	public static function loadPrefs()
+	{
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}
+		// Mobile Functions :D
+		if (FlxG.save.data.extraButtons != null) {
+			extraButtons = FlxG.save.data.extraButtons;
+		}
+		if (FlxG.save.data.hitboxPos != null) {
+			hitboxPos = FlxG.save.data.hitboxPos;
+		}
+		if (FlxG.save.data.controlsAlpha != null) {
+			controlsAlpha = FlxG.save.data.controlsAlpha;
+		}
+		if (FlxG.save.data.screensaver != null) {
+			screensaver = FlxG.save.data.screensaver;
+		}
+		if (FlxG.save.data.hitboxType != null) {
+			hitboxType = FlxG.save.data.hitboxType;
+		}
+		// PE and Mod functions;
 		if(FlxG.save.data.hitSound != null) {
 			hitSound = FlxG.save.data.hitSound;
 		}
