@@ -1699,7 +1699,7 @@ class PlayState extends MusicBeatState
 
 	// CUTSCENES HANDLERS --------------------------------------- 
 
-	function playCutscene(name:String, atEndOfSong:Bool = false)
+	/*function playCutscene(name:String, atEndOfSong:Bool = false)
 	{
 		inCutscene = true;
 		FlxG.sound.music.stop();
@@ -1707,19 +1707,20 @@ class PlayState extends MusicBeatState
 		var video:VideoHandler = new VideoHandler();
 		video.finishCallback = function()
 		{
-		if (atEndOfSong)
-		{
-			if (storyPlaylist.length <= 0) {
-				FlxG.switchState(new StoryMenuState());
+			if (atEndOfSong)
+			{
+				if (storyPlaylist.length <= 0) {
+					FlxG.switchState(new StoryMenuState());
+				} else {
+					SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+					FlxG.switchState(new PlayState());
+				}
 			} else {
-				SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
-				FlxG.switchState(new PlayState());
+				startCountdown();
 			}
-		} else {
-			startCountdown();
 		}
 		video.playVideo(Paths.video(name));
-	}
+	}*/
 
 	public function startVideo(name:String):Void
 	{
@@ -1727,7 +1728,8 @@ class PlayState extends MusicBeatState
 		var foundFile:Bool = false;
 		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
 		#if sys
-		if(Util.exists(fileName)) {
+		if(Util.exists(fileName))
+		{
 			foundFile = true;
 		}
 		#end
@@ -1742,27 +1744,28 @@ class PlayState extends MusicBeatState
     		#end
 		#end*/
 
-		if(!foundFile) {
+		if(!foundFile)
+		{
 			fileName = Paths.video(name);
-			#if sys
-			if(Util.exists(fileName)) {
-			#else
-			if(OpenFlAssets.exists(fileName)) {
-			#end
+			if(OpenFlAssets.exists(fileName))
+			{
 				foundFile = true;
 			}
 		}
 
-		if(foundFile) {
+		if(foundFile)
+		{
 			inCutscene = true;
 			var bg = new FlxSprite(-FlxG.width, -FlxG.height).makeGraphic(FlxG.width * 3, FlxG.height * 3, FlxColor.BLACK);
 			bg.scrollFactor.set();
 			bg.cameras = [camHUD];
 			add(bg);
 
-			(new FlxVideo(fileName)).finishCallback = function() {
+			(new FlxVideo(fileName)).finishCallback = function()
+			{
 				remove(bg);
-				if(endingSong) {
+				if(endingSong)
+				{
 					endSong();
 				} else {
 					startCountdown();
@@ -1773,7 +1776,8 @@ class PlayState extends MusicBeatState
 			FlxG.log.warn('Couldnt find video file: ' + fileName);
 		}
 		#end
-		if(endingSong) {
+		if(endingSong)
+		{
 			endSong();
 		} else {
 			startCountdown();
