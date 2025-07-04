@@ -33,7 +33,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@v1.1.5
         with:
-          haxe-version: 4.2.5 # 4.2.5 or 4.3.6
+          haxe-version: 4.3.6 # 4.2.5 or 4.3.6
 
       - name: Restore existing build cache for faster compilation
         uses: actions/cache@v3
@@ -55,8 +55,8 @@ jobs:
           haxelib set lime 8.2.2
           haxelib install openfl 9.4.1 --quiet
           haxelib set openfl 9.4.1
-          haxelib install flixel 5.3.1 --quiet
-          haxelib set flixel 5.3.1
+          haxelib install flixel 5.6.1 --quiet
+          haxelib set flixel 5.6.1
           haxelib install flixel-addons --quiet
           haxelib install flixel-ui 2.6.4 --quiet
           haxelib set flixel-ui 2.6.4

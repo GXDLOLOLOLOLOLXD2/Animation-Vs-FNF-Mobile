@@ -75,8 +75,8 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
-			['Android Port']
-			['Your Name', 'Your Icon', 'Hi, I ported this mod', 'Your Link', '0x16A4EB'] // Blue/Cyan IDK BG
+			['Android Port'],
+			['sysource-xyz', 'soulbf10', 'Hi, I ported this mod', 'https://www.youtube.com/@sysource-xyz', '0x16A4EB'], // Blue/Cyan IDK BG
 			['Animation VS FNF Team'],
 			['Sir Chapurato', 			'sirchap',			'Director and Charter',			'https://www.youtube.com/channel/UC37f51A8bNepi7PvD8owOxQ'],
 			['Salty Sovet',			'funnisovet',			'Lead coder and Co-Director', 			'https://www.youtube.com/channel/UC1qT2vh0aORFdHA4cVAHZUw'],

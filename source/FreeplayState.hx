@@ -253,11 +253,11 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 
 		#if mobile
-		// no implemention for mobile of x/shift
+		var shift = touchPad.buttonX.justPressed // no real implemention for mobile of x/shift
 		var space = touchPad.buttonX.justPressed; // X replace space function
 		var ctrl = touchPad.buttonY.justPressed; // Y replace ctrl function
 		#else
-		var _xshift = FlxG.keys.pressed.SHIFT;
+		var shift = FlxG.keys.pressed.SHIFT;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 		#end
@@ -350,7 +350,7 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			
-			if (_xshift){
+			if (shift){
 				LoadingState.loadAndSwitchState(new ChartingState());
 				removeTouchPad();
 			}else{
