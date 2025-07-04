@@ -68,6 +68,7 @@ import mobile.objects.TouchButton;
 import mobile.objects.TouchPad;
 import mobile.input.MobileInputID;
 import mobile.Util;
+import pyschlua.LuaUtils;
 
 #if sys
 import sys.FileSystem;
@@ -4207,8 +4208,8 @@ class PlayState extends MusicBeatState
 		return returnVal;
 	}
 
-	public function callOnHScript(...) {
-		// not using rn
+	public function callOnHScript(funcToCall:String, args:Array<Dynamic> = null, ?ignoreStops:Bool = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic // NOT using Right Now
+	{
 		return LuaUtils.Function_Continue;
 	}
 
