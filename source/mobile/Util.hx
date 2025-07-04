@@ -28,10 +28,6 @@ import mobile.extras.*;
 import mobile.pyschlua.*;
 // XD
 
-// ...
-import String;
-// ,_,
-
 /*
  * A file for internal founder and multiples folders list
  * author: @GXDLOLOLOLOLOLXD2, azeitona-x7 and Idklool for the extra utils... XD
@@ -127,7 +123,7 @@ class Util // MultipleUtil
         var files = [];
         for (id in all)
         {
-            if (id.startsWith(prefix))
+            if (id != null && id.startsWith(prefix))
                 files.push(id);
         }
         return files;
@@ -139,7 +135,7 @@ class Util // MultipleUtil
         var filtered:Array<String> = [];
         for (id in all)
         {
-            if (id.startsWith(prefix))
+            if (id != null && id.startsWith(prefix))
                 filtered.push(id);
         }
         return filtered;
@@ -157,7 +153,7 @@ class Util // MultipleUtil
         var all = openfl.utils.Assets.list();
         var filtered = [];
         for (id in all)
-            if (id.startsWith(prefix))
+            if (id != null && id.startsWith(prefix))
                 filtered.push(id);
         return filtered;
     }
@@ -167,7 +163,7 @@ class Util // MultipleUtil
     {
         var all = openfl.utils.Assets.list();
         for (id in all)
-            if (id.startsWith(prefix))
+            if (id != null && id.startsWith(prefix))
                 return true;
         return false;
     }
@@ -281,9 +277,9 @@ class Util // MultipleUtil
     {
         var something:Array<String> = [];
         #if mobile 
-        for (folder in Assets.list().filter(text -> text.contains(library)))
+        for (folder in Assets.list().filter(text -> text != null && text.contains(library)))
         {
-          if (!folder.startsWith('.'))
+          if (folder != null && !folder.startsWith('.'))
           something.push(folder);
         }
         return something;
