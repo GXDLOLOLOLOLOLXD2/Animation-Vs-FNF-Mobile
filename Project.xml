@@ -122,7 +122,10 @@
 	<haxelib name="hxCodec" />
 
 	<haxelib name="extension-androidtools" if="mobile" />
-	<haxelib name="hxvlc" if="VIDEOS_ALLOWED"/><!-- For Cutscenes... Test -->
+	<!-- <haxelib name="hxvlc" if="VIDEOS_ALLOWED"/> For Cutscenes... Test -->
+	<section if="cpp">
+		<haxelib name="hxvlc" if="VIDEOS_ALLOWED" />
+	</section>
 
 	<!-- Haxe 4+ compatibility -->
 	<haxedef name="HXCPP_FLOAT32" />
