@@ -119,7 +119,7 @@
 	<haxelib name="lime" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-tools" />
-	<haxelib name="hxCodec" />
+	<!--<haxelib name="hxCodec" />--> <!-- removed for just use hxvlc -->
 
 	<haxelib name="extension-androidtools" if="mobile" />
 	<!-- <haxelib name="hxvlc" if="VIDEOS_ALLOWED"/> For Cutscenes... Test -->

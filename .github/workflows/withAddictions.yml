@@ -49,7 +49,6 @@ jobs:
           haxelib install flixel-tools --quiet
           haxelib install hscript --quiet
           haxelib install actuate --quiet
-          haxelib install hxCodec --quiet
           haxelib install hxcpp-debug-server --quiet
 
           # Required for mobile + cutscenes + Lua
