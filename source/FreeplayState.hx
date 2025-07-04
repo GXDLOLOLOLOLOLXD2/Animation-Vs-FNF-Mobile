@@ -314,56 +314,32 @@ class FreeplayState extends MusicBeatState
 		{
 			if(instPlaying != curSelected)
 			{
-				var instSound:openfl.media.Sound = Paths.inst(PlayState.SONG.song);
+				destroyFreeplayVocals();
+				FlxG.sound.music.volume = 0;
+
+				Paths.currentModDirectory = songs[curSelected].folder;
+				var poop = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+
 				var vocalsSound:openfl.media.Sound = Paths.voices(PlayState.SONG.song);
 
-				var musicSnd:FlxSound = null;
-				var voxSnd:FlxSound = null;
-
-				if (instSound != null)
+				if (PlayState.SONG.needsVoices && vocalsSound != null)
 				{
-					musicSnd = new FlxSound();
-					musicSnd.loadEmbedded(instSound);
+					var voxSnd:FlxSound = new FlxSound();
+					voxSnd.loadEmbedded(vocalsSound);
+					FlxG.sound.list.add(voxSnd);
 
-					if (vocalsSound != null)
-					{
-						voxSnd = new FlxSound();
-						voxSnd.loadEmbedded(vocalsSound);
-						vocals = voxSnd;
-					}
-					else {
-						vocals = null;
-					}
-				}
-
-				#if PRELOAD_ALL
-				if (musicSnd != null) {
-					destroyFreeplayVocals();
-					FlxG.sound.music.volume = 0;
-					Paths.currentModDirectory = songs[curSelected].folder;
-					var poop = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-
-					if (PlayState.SONG.needsVoices && voxSnd != null)
-					{
-						FlxG.sound.list.add(voxSnd);
-					}
-					FlxG.sound.list.add(musicSnd);
-
-					FlxG.sound.playMusic(musicSnd);
-
-					if (vocals != null)
-					{
-						vocals.play();
-						vocals.persist = true;
-						vocals.looped = true;
-						vocals.volume = 0.7;
-					}
-					instPlaying = curSelected;
-					#end
+					vocals = voxSnd;
+					vocals.play();
+					vocals.persist = true;
+					vocals.looped = true;
+					vocals.volume = 0.7;
 				} else {
-					trace("InstSound not found for the music: " + PlayState.SONG.song); // if is null, gets a debug warning error
+					vocals = null;
 				}
+
+				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song));
+				instPlaying = curSelected;
 			}
 		}
 

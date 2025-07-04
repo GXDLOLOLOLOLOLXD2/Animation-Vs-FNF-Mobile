@@ -840,8 +840,10 @@ class PlayState extends MusicBeatState
 				add(animatedbg);
 				remove(animatedbg);
 				
-				var video:MP4Handler = new MP4Handler();
-				video.playMP4(Paths.video('animatedbg'), null, animatedbg);
+				#if VIDEOS_ALLOWED
+				var bgVideo = new MP4Handler();
+				bgVideo.playBackground("animatedbg"); // video in infinite loop
+				#end
 
 				if (animatedbgdisable == true)
 				{
@@ -870,9 +872,9 @@ class PlayState extends MusicBeatState
 					backdudes.scrollFactor.set(0.9, 0.9);
 					backdudes.updateHitbox();
 					add(backdudes);
-					} else if(ClientPrefs.lowQuality) {
-						remove(backdudes);
-					}
+				} else if(ClientPrefs.lowQuality) {
+					remove(backdudes);
+				}
 		}
 
 		if(isPixelStage) {
@@ -1268,6 +1270,8 @@ class PlayState extends MusicBeatState
 		botplayTxt.borderSize = 1.25;
 		botplayTxt.visible = cpuControlled;
 		add(botplayTxt);
+
+		var watermarkTxt:FlxText;
 
 		watermarkTxt = new FlxText(876, 648, 348);
     	watermarkTxt.text = "PORTED BY\nSYS-XYZ"; // Credits to FNFBR
@@ -1693,6 +1697,30 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
+	// CUTSCENES HANDLERS --------------------------------------- 
+
+	function playCutscene(name:String, atEndOfSong:Bool = false)
+	{
+		inCutscene = true;
+		FlxG.sound.music.stop();
+
+		var video:VideoHandler = new VideoHandler();
+		video.finishCallback = function()
+		{
+		if (atEndOfSong)
+		{
+			if (storyPlaylist.length <= 0) {
+				FlxG.switchState(new StoryMenuState());
+			} else {
+				SONG = Song.loadFromJson(storyPlaylist[0].toLowerCase());
+				FlxG.switchState(new PlayState());
+			}
+		} else {
+			startCountdown();
+		}
+		video.playVideo(Paths.video(name));
+	}
+
 	public function startVideo(name:String):Void
 	{
 		#if VIDEOS_ALLOWED
@@ -1751,6 +1779,8 @@ class PlayState extends MusicBeatState
 			startCountdown();
 		}
 	}
+
+	/// etc...
 
 	var dialogueCount:Int = 0;
 	//You don't have to add a song, just saying. You can just do "startDialogue(dialogueJson);" and it should work
@@ -4119,6 +4149,65 @@ class PlayState extends MusicBeatState
 	}
 
 	// Some Mobile func
+
+	var playFields:FlxTypedGroup<PlayField> = new FlxTypedGroup<PlayField>();
+	public function callOnScripts(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic
+	{
+		var returnVal:Dynamic = LuaUtils.Function_Continue;
+		if(args == null) args = [];
+		if(exclusions == null) exclusions = [];
+		if(excludeValues == null) excludeValues = [LuaUtils.Function_Continue];
+
+		var result:Dynamic = callOnLuas(funcToCall, args, ignoreStops, exclusions, excludeValues);
+		if(result == null || excludeValues.contains(result)) result = callOnHScript(funcToCall, args, ignoreStops, exclusions, excludeValues);
+		return result;
+	}
+
+	public function callOnLuas(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic
+	{
+		var returnVal:Dynamic = LuaUtils.Function_Continue;
+		#if LUA_ALLOWED
+		if(args == null) args = [];
+		if(exclusions == null) exclusions = [];
+		if(excludeValues == null) excludeValues = [LuaUtils.Function_Continue];
+
+		var arr:Array<FunkinLua> = [];
+		for (script in luaArray)
+		{
+			if(script.closed)
+			{
+				arr.push(script);
+				continue;
+			}
+
+			if(exclusions.contains(script.scriptName))
+				continue;
+
+			var myValue:Dynamic = script.call(funcToCall, args);
+			if((myValue == LuaUtils.Function_StopLua || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
+			{
+				returnVal = myValue;
+				break;
+			}
+
+			if(myValue != null && !excludeValues.contains(myValue))
+				returnVal = myValue;
+
+			if(script.closed) arr.push(script);
+		}
+
+		if(arr.length > 0)
+			for (script in arr)
+				luaArray.remove(script);
+		#end
+		return returnVal;
+	}
+
+	public function callOnHScript(...) {
+		// not using rn
+		return LuaUtils.Function_Continue;
+	}
+
 	private function onButtonPress(button:TouchButton):Void
 	{
 		if (button.IDs.filter(id -> id.toString().startsWith("EXTRA")).length > 0)

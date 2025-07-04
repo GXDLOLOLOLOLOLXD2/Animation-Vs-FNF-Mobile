@@ -13,6 +13,15 @@ import openfl.events.Event;
 
 class Main extends Sprite
 {
+	public static final game = { // Copy of Psych Engine lastest version
+		width: 1280, // WINDOW width
+		height: 720, // WINDOW height
+		initialState: TitleState, // initial game state
+		framerate: 60, // default framerate
+		skipSplash: true, // if the default flixel splash screen should be skipped
+		startFullscreen: false // if the game should start at fullscreen mode
+	};
+
 	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
 	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
@@ -32,6 +41,8 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+
+		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
 
 		// MobileData.init();
 

@@ -8,11 +8,12 @@ import lime.utils.AssetManifest;
 #if sys
 import sys.io.File;
 import sys.FileSystem;
-#else
-import openfl.utils.Assets;
 #end
 import flixel.util.FlxColor;
 import mobile.Util;
+
+import flixel.sound.FlxSound;
+import openfl.utils.Assets;
 
 using StringTools;
 
@@ -120,11 +121,16 @@ class CoolUtil
 	public static function precacheSound(sound:String, ?library:String = null):Void
 	{
 		var path = Paths.sound(sound, library);
-		if (!FlxG.sound.cache.exists(path)) {
-			var s:FlxSound = new FlxSound();
-			s.load(path);
-			FlxG.sound.cache.add(path, s);
+
+		if (!Assets.exists(path))
+			trace('Sound $sound not found at $path');
+			return;
 		}
+		
+		// manual use
+		var s:FlxSound = new FlxSound();
+		s.loadEmbedded(path);
+		s.destroy(); // clear memory
 	}
 
 	public static function browserLoad(site:String) {

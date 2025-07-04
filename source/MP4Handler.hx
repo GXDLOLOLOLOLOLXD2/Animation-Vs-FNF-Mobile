@@ -1,147 +1,71 @@
 package;
 
+#if VIDEOS_ALLOWED
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.FlxState;
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import openfl.events.Event;
-import vlc.VlcBitmap;
+import openfl.display.Sprite;
+import video.VideoSprite;
+import lime.app.Application;
 
-// THIS IS FOR TESTING
-// DONT STEAL MY CODE >:(
-class MP4Handler
-{
+/*
+ * Video Handler Working using hxCodec
+ * by @azeitona-x7(youtube channel)
+*/
+
+class MP4Handler {
 	public var finishCallback:Void->Void;
-	public var stateCallback:FlxState;
+	public var sprite:VideoSprite;
 
-	public var bitmap:VlcBitmap;
+	public function new() {}
 
-	public var sprite:FlxSprite;
-
-	public function new()
+	// play just 1 time in the song and ends
+	public function playMP4(file:String, ?outputTo:FlxSprite = null):Void
 	{
-		//FlxG.autoPause = false;
-	}
+		var path = Paths.video(file); // ex: 'animatedbg' -> assets/videos/animatedbg.mp4
+		sprite = new VideoSprite();
+		sprite.load(path);
 
-	public function playMP4(path:String, ?repeat:Bool = true, ?outputTo:FlxSprite = null, ?isWindow:Bool = false, ?isFullscreen:Bool = false,
-			?midSong:Bool = false):Void
-	{
-		if (!midSong)
-		{
-			if (FlxG.sound.music != null)
-			{
-				FlxG.sound.music.stop();
+		sprite.onComplete = function() {
+			trace("Vídeo finalizado: " + file);
+			if (finishCallback != null) {
+				new FlxTimer().start(0.1, function(_) finishCallback());
 			}
-		}
+			// removed when the song finish
+			if (sprite.parent != null) sprite.parent.removeChild(sprite);
+		};
 
-		bitmap = new VlcBitmap();
+		sprite.play();
 
-		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16)
-		{
-			bitmap.set_width(FlxG.stage.stageHeight * (16 / 9));
-			bitmap.set_height(FlxG.stage.stageHeight);
-		}
-		else
-		{
-			bitmap.set_width(FlxG.stage.stageWidth);
-			bitmap.set_height(FlxG.stage.stageWidth / (16 / 9));
-		}
+		// add the stage on top of everything
+		Application.current.window.stage.addChild(sprite);
 
-		
-
-		bitmap.onVideoReady = onVLCVideoReady;
-		bitmap.onComplete = onVLCComplete;
-		bitmap.onError = onVLCError;
-
-		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
-
-		if (repeat)
-			bitmap.repeat = -1; 
-		else
-			bitmap.repeat = 0;
-
-		bitmap.inWindow = isWindow;
-		bitmap.fullscreen = isFullscreen;
-
-		FlxG.addChildBelowMouse(bitmap);
-		bitmap.play(checkFile(path));
-
-		if (outputTo != null)
-		{
-			// lol this is bad kek
-			bitmap.alpha = 0;
-
-			sprite = outputTo;
+		// if wants appear inside a FlxSprite (like background)
+		if (outputTo != null) {
+			outputTo.loadGraphic(sprite.bitmapData);
+			sprite.visible = false;
 		}
 	}
 
-	function checkFile(fileName:String):String
+	// plays in loop
+	public function playBackground(file:String):Void
 	{
-		var pDir = "";
-		var appDir = "file:///" + Sys.getCwd() + "/";
+		var path = Paths.video(file);
+		sprite = new VideoSprite();
+		sprite.load(path);
+		sprite.loop = true;
+		sprite.play();
 
-		if (fileName.indexOf(":") == -1) // Not a path
-			pDir = appDir;
-		else if (fileName.indexOf("file://") == -1 || fileName.indexOf("http") == -1) // C:, D: etc? ..missing "file:///" ?
-			pDir = "file:///";
-
-		return pDir + fileName;
+		Application.current.window.stage.addChildAt(sprite, 0);
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////////
-
-	function onVLCVideoReady()
+	public function stop():Void
 	{
-		trace("video loaded!");
-
-		if (sprite != null)
-			sprite.loadGraphic(bitmap.bitmapData);
-	}
-
-	public function onVLCComplete()
-	{
-		// Clean player, just in case! Actually no.
-
-		FlxG.camera.fade(FlxColor.BLACK, 0, false);
-
-		trace("Big, Big Chungus, Big Chungus!");
-
-		new FlxTimer().start(0, function(tmr:FlxTimer)
-		{
-			if (finishCallback != null)
-			{
-				finishCallback();
-			}
-			else if (stateCallback != null)
-			{
-				LoadingState.loadAndSwitchState(stateCallback);
-			}
-		});
-	}
-
-	public function kill()
-	{
-
-	}
-
-	function onVLCError()
-	{
-		if (finishCallback != null)
-		{
-			finishCallback();
+		if (sprite != null) {
+			sprite.stop();
+			if (sprite.parent != null) sprite.parent.removeChild(sprite);
+			sprite = null;
 		}
-		else if (stateCallback != null)
-		{
-			LoadingState.loadAndSwitchState(stateCallback);
-		}
-	}
-
-	function update(e:Event)
-	{
-		bitmap.volume = FlxG.sound.volume + 0.3; // shitty volume fix. then make it louder.
-
-		if (FlxG.sound.volume <= 0.1)
-			bitmap.volume = 0;
 	}
 }
+#end

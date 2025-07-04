@@ -47,6 +47,10 @@ import mobile.substates.*;
 import mobile.options.*;
 import mobile.extras.*;
 import mobile.pyschlua.*;
+import mobile.objects.*;
+
+import mobile.objects.Alphabet;
+import mobile.objects.MobileControls;
 
 using StringTools;
 

@@ -117,6 +117,16 @@ class Paths
 		return 'assets/$file';
 	}
 
+	public static function getSharedPath():String
+	{
+		// return "storage/emulated/0/VsAnimation";
+		return "assets"
+	}
+	public static function getGlobalMods():String
+	{
+		return "mods";
+	}
+
 	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
 	{
 		return getPath(file, type, library);

@@ -28,7 +28,7 @@ import Controls;
 import DialogueBoxPsych;
 
 #if desktop
-import Discord;
+import Discord.DiscordClient;
 #end
 
 using StringTools;

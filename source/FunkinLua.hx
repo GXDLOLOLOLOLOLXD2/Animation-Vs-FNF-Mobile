@@ -34,7 +34,7 @@ import DialogueBoxPsych;
 import mobile.Util;
 
 #if desktop
-import Discord;
+import Discord.DiscordClient;
 #end
 
 using StringTools;

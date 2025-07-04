@@ -94,6 +94,9 @@
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
+	<!-- Show debug traces for hxCodec -->
+	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
+
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 
@@ -119,13 +122,9 @@
 	<haxelib name="lime" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-tools" />
-	<!--<haxelib name="hxCodec" />--> <!-- removed for just use hxvlc -->
+	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
 
 	<haxelib name="extension-androidtools" if="mobile" />
-	<!-- <haxelib name="hxvlc" if="VIDEOS_ALLOWED"/> For Cutscenes... Test -->
-	<section if="cpp">
-		<haxelib name="hxvlc" if="VIDEOS_ALLOWED" />
-	</section>
 
 	<!-- Haxe 4+ compatibility -->
 	<haxedef name="HXCPP_FLOAT32" />

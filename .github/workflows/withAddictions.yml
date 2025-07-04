@@ -52,11 +52,11 @@ jobs:
           haxelib install hxcpp-debug-server --quiet
 
           # Required for mobile + cutscenes + Lua
+          haxelib install hxCodec --quiet
           haxelib git linc_luajit https://github.com/MaysLastPlays-Stuff/linc_luajit.git --quiet
           haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git --quiet
           haxelib git extension-webview https://github.com/Daninnocent/extension-webview.git --quiet
           haxelib install extension-webm --quiet
-          haxelib git hxvlc https://github.com/MAJigsaw77/hxvlc.git --quiet
 
           # Desktop-specific
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git --quiet

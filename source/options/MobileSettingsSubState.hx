@@ -48,12 +48,7 @@ class MobileSettingsSubState extends BaseOptionsMenu
 			'Changes the opacity of the touch buttons.\n0.0 is invisible, 0.6 is default, 1.0 is visible.',
 			'controlsAlpha',
 			'float',
-			0.0,
-            0.2,
-            0.4,
-            0.6,
-            0.8,
-			1.0);
+			['0.0', '0.2', '0.4', '0.6', '0.8', '1.0']);
 
 		var screensaverOption = new Option('Screensaver',
 			'Enable/Desable the mode of "sleep screen" (when the game are inative).',
