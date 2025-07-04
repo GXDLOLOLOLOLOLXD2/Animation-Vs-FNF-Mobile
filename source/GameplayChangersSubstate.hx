@@ -247,9 +247,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			}
 
 			#if mobile
-			var reset = touchPad.buttonC.justPressed
+			var reset = touchPad.buttonC.justPressed;
 			#else
-			var reset = controls.RESET
+			var reset = controls.RESET;
 			#end
 			if(reset)
 			{

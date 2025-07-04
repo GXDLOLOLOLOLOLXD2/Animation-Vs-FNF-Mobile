@@ -257,7 +257,7 @@ class FreeplayState extends MusicBeatState
 		var space = touchPad.buttonX.justPressed; // X replace space function
 		var ctrl = touchPad.buttonY.justPressed; // Y replace ctrl function
 		#else
-		var _xshift = FlxG.keys.pressed.SHIFT
+		var _xshift = FlxG.keys.pressed.SHIFT;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 		#end

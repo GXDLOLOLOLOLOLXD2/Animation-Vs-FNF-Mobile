@@ -10,6 +10,8 @@ import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
 
+import mobile.Util;
+
 typedef MenuCharacterFile = {
 	var image:String;
 	var scale:Float;
@@ -30,7 +32,8 @@ class MenuCharacter extends FlxSprite
 		changeCharacter(character);
 	}
 
-	public function changeCharacter(?character:String = 'bf') {
+	public function changeCharacter(?character:String = 'bf')
+	{
 		if(character == null) character = '';
 		if(character == this.character) return;
 
@@ -52,11 +55,11 @@ class MenuCharacter extends FlxSprite
 
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(path)) {
+				if (!Util.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
-				if(!FileSystem.exists(path)) {
+				if(!Util.exists(path)) {
 					path = Paths.getPreloadPath('images/menucharacters/' + DEFAULT_CHARACTER + '.json');
 				}
 				rawJson = File.getContent(path);

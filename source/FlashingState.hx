@@ -42,11 +42,11 @@ class FlashingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		#if mobile
-		var _enter = controls.ACCEPT // a
-		var _escape = controls.BACK // b
+		var _enter = controls.ACCEPT; // a
+		var _escape = controls.BACK; // b
 		#else
-		var _enter = FlxG.keys.justPressed.ENTER
-		var _escape = FlxG.keys.justPressed.ESCAPE
+		var _enter = FlxG.keys.justPressed.ENTER;
+		var _escape = FlxG.keys.justPressed.ESCAPE;
 		#end
 		if (_enter)
 		{

@@ -18,6 +18,8 @@ import sys.io.File;
 #end
 import lime.utils.Assets;
 
+import mobile.Util;
+
 using StringTools;
 
 class CreditsState extends MusicBeatState

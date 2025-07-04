@@ -142,9 +142,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	override function update(elapsed:Float)
 	{
 		#if mobile
-		var _buttonC = touchPad.buttonC.justPressed
+		var _buttonC = touchPad.buttonC.justPressed;
 		#else
-		var _buttonC = controls.RESET
+		var _buttonC = controls.RESET;
 		#end
 
 		if (controls.UI_UP_P) // up

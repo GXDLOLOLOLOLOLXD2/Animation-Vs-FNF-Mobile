@@ -151,6 +151,8 @@ class GameOverState extends MusicBeatSubstate
 
 >>>>>>> parent of 4492a8b (Merge branch 'main' of https://github.com/Noam-lol/Animation-Vs-Fnf-sourceCode)
 		super.create();
+
+		addTouchPad("NONE", "A_B");
 	}
 
 	override function update(elapsed:Float)

@@ -307,7 +307,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	 * Basic button update logic - searches for overlaps with touches and
 	 * the touch and calls `updateStatus()`.
 	 */
-	function updateButton():Void
+	public function updateButton():Void
 	{
 		var overlapFound = checkTouchOverlap();
 
@@ -318,7 +318,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 			onOutHandler();
 	}
 
-	function checkTouchOverlap():Bool
+	public function checkTouchOverlap():Bool
 	{
 		var overlap = false;
 
@@ -337,7 +337,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return overlap;
 	}
 
-	function checkInput(pointer:FlxPointer, input:IFlxInput, justPressedPosition:FlxPoint, camera:FlxCamera):Bool
+	public function checkInput(pointer:FlxPointer, input:IFlxInput, justPressedPosition:FlxPoint, camera:FlxCamera):Bool
 	{
 		if (maxInputMovement != Math.POSITIVE_INFINITY
 			&& justPressedPosition.distanceTo(pointer.getScreenPosition(FlxPoint.weak())) > maxInputMovement
@@ -357,7 +357,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Updates the button status by calling the respective event handler function.
 	 */
-	function updateStatus(input:IFlxInput):Void
+	public function updateStatus(input:IFlxInput):Void
 	{
 		if (input.justPressed)
 		{
@@ -374,7 +374,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		}
 	}
 
-	function updateLabelPosition()
+	public function updateLabelPosition()
 	{
 		if (_spriteLabel != null)
 		{
@@ -383,13 +383,13 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		}
 	}
 
-	function updateLabelScale()
+	public function updateLabelScale()
 	{
 		if (_spriteLabel != null)
 			_spriteLabel.scale.set(scale.x, scale.y);
 	}
 
-	function indicateStatus()
+	public function indicateStatus()
 	{
 		switch (statusIndicatorType)
 		{
@@ -404,7 +404,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Internal function that handles the onUp event.
 	 */
-	function onUpHandler():Void
+	public function onUpHandler():Void
 	{
 		status = TouchButton.NORMAL;
 		input.release();
@@ -415,7 +415,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Internal function that handles the onDown event.
 	 */
-	function onDownHandler():Void
+	public function onDownHandler():Void
 	{
 		status = TouchButton.PRESSED;
 		input.press();
@@ -425,7 +425,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Internal function that handles the onOver event.
 	 */
-	function onOverHandler():Void
+	public function onOverHandler():Void
 	{
 		status = TouchButton.HIGHLIGHT;
 		onOver.fire(); // Order matters here, because onOver.fire() could cause a state change and destroy this object.
@@ -434,14 +434,14 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 	/**
 	 * Internal function that handles the onOut event.
 	 */
-	function onOutHandler():Void
+	public function onOutHandler():Void
 	{
 		status = TouchButton.NORMAL;
 		input.release();
 		onOut.fire(); // Order matters here, because onOut.fire() could cause a state change and destroy this object.
 	}
 
-	function set_label(Value:T):T
+	public function set_label(Value:T):T
 	{
 		if (Value != null)
 		{
@@ -461,14 +461,14 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return Value;
 	}
 
-	function set_status(Value:Int):Int
+	public function set_status(Value:Int):Int
 	{
 		status = Value;
 		indicateStatus();
 		return status;
 	}
 
-	override function set_alpha(Value:Float):Float
+	public override function set_alpha(Value:Float):Float
 	{
 		super.set_alpha(Value);
 		if (_spriteLabel != null && canChangeLabelAlpha)
@@ -476,7 +476,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return Value;
 	}
 
-	override function set_visible(Value:Bool):Bool
+	public override function set_visible(Value:Bool):Bool
 	{
 		super.set_visible(Value);
 		if (_spriteLabel != null)
@@ -484,21 +484,21 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return Value;
 	}
 
-	override function set_x(Value:Float):Float
+	public override function set_x(Value:Float):Float
 	{
 		super.set_x(Value);
 		updateLabelPosition();
 		return x;
 	}
 
-	override function set_y(Value:Float):Float
+	public override function set_y(Value:Float):Float
 	{
 		super.set_y(Value);
 		updateLabelPosition();
 		return y;
 	}
 
-	override function set_color(Value:FlxColor):Int
+	public override function set_color(Value:FlxColor):Int
 	{
 		if (_spriteLabel != null)
 			_spriteLabel.color = Value;
@@ -507,14 +507,14 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return Value;
 	}
 
-	override private function set_width(Value:Float)
+	public override function set_width(Value:Float)
 	{
 		super.set_width(Value);
 		updateLabelScale();
 		return Value;
 	}
 
-	override private function set_height(Value:Float)
+	public override function set_height(Value:Float)
 	{
 		super.set_height(Value);
 		updateLabelScale();
@@ -528,7 +528,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 			_spriteLabel.updateHitbox();
 	}
 
-	function set_parentAlpha(Value:Float):Float
+	public function set_parentAlpha(Value:Float):Float
 	{
 		statusAlphas = [
 			Value,
@@ -540,7 +540,7 @@ class TypedTouchButton<T:FlxSprite> extends FlxSprite implements IFlxInput
 		return parentAlpha = Value;
 	}
 
-	function set_statusIndicatorType(Value:StatusIndicators)
+	public function set_statusIndicatorType(Value:StatusIndicators)
 	{
 		if (Value == BRIGHTNESS)
 		{

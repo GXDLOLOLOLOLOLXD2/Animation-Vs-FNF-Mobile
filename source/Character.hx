@@ -15,6 +15,8 @@ import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
 
+import mobile.Util;
+
 using StringTools;
 
 typedef CharacterFile = {
@@ -98,11 +100,11 @@ class Character extends FlxSprite
 				var characterPath:String = 'characters/' + curCharacter + '.json';
 				#if MODS_ALLOWED
 				var path:String = Paths.modFolders(characterPath);
-				if (!FileSystem.exists(path)) {
+				if (!Util.exists(path)) {
 					path = Paths.getPreloadPath(characterPath);
 				}
 
-				if (!FileSystem.exists(path))
+				if (!Util.exists(path))
 				#else
 				var path:String = Paths.getPreloadPath(characterPath);
 				if (!Assets.exists(path))
@@ -112,7 +114,7 @@ class Character extends FlxSprite
 				}
 
 				#if MODS_ALLOWED
-				var rawJson = File.getContent(path);
+				var rawJson = Util.getContent(path);
 				#else
 				var rawJson = Assets.getText(path);
 				#end
@@ -120,7 +122,7 @@ class Character extends FlxSprite
 				var json:CharacterFile = cast Json.parse(rawJson);
 				#if MODS_ALLOWED
 				var txtToFind:String = Paths.getPath('images/' + json.image + '.txt', TEXT);
-				if(FileSystem.exists(txtToFind) || Assets.exists(txtToFind))
+				if(Util.exists(txtToFind) || Assets.exists(txtToFind))
 				#else
 				if(Assets.exists(Paths.getPath('images/' + json.image + '.txt', TEXT)))
 				#end

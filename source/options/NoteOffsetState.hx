@@ -214,9 +214,9 @@ class NoteOffsetState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		#if mobile
-		var _buttonC = touchPad.buttonC.justPressed
+		var _buttonC = touchPad.buttonC.justPressed;
 		#else
-		var _buttonC = controls.RESET
+		var _buttonC = controls.RESET;
 		#end
 
 		var addNum:Int = 1;

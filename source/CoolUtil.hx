@@ -11,6 +11,8 @@ import sys.FileSystem;
 #else
 import openfl.utils.Assets;
 #end
+import flixel.util.FlxColor;
+import mobile.Util;
 
 using StringTools;
 
@@ -54,7 +56,7 @@ class CoolUtil
 	{
 		var daList:Array<String> = [];
 		#if sys
-		if(FileSystem.exists(path)) daList = File.getContent(path).trim().split('\n');
+		if(Util.exists(path)) daList = Util.getContent(path).trim().split('\n');
 		#else
 		if(Assets.exists(path)) daList = Assets.getText(path).trim().split('\n');
 		#end
@@ -65,6 +67,16 @@ class CoolUtil
 		}
 
 		return daList;
+	}
+	public static function colorFromString(color:String):FlxColor
+	{
+		var hideChars = ~/[\t\n\r]/;
+		var color:String = hideChars.split(color).join('').trim();
+		if(color.startsWith('0x')) color = color.substring(color.length - 6);
+
+		var colorNum:Null<FlxColor> = FlxColor.fromString(color);
+		if(colorNum == null) colorNum = FlxColor.fromString('#$color');
+		return colorNum != null ? colorNum : FlxColor.WHITE;
 	}
 	public static function listFromString(string:String):Array<String>
 	{

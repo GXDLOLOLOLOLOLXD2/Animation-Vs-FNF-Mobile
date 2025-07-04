@@ -9,6 +9,8 @@ import openfl.utils.Assets as OpenFlAssets;
 import haxe.Json;
 import haxe.format.JsonParser;
 
+import mobile.Util;
+
 using StringTools;
 
 typedef WeekFile =

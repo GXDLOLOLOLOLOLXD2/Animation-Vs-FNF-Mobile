@@ -35,7 +35,10 @@ import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
 
+import mobile.Util;
+
 using StringTools;
+
 typedef TitleData =
 {
 	

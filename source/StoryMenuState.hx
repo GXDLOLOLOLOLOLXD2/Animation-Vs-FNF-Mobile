@@ -244,11 +244,11 @@ class StoryMenuState extends MusicBeatState
 				changeDifficulty();
 
 			#if mobile
-			var ctrl = touchPad.buttonX.justPressed // X replace ctrl for open the Gameplay Settings like speed and others
-			var r_y = touchPad.buttonY.justPressed // Y replace reset for reset the score of a song/week
+			var ctrl = touchPad.buttonX.justPressed; // X replace ctrl for open the Gameplay Settings like speed and others
+			var r_y = touchPad.buttonY.justPressed; // Y replace reset for reset the score of a song/week
 			#else
-			var ctrl = FlxG.keys.justPressed.CONTROL
-			var r_y = controls.RESET
+			var ctrl = FlxG.keys.justPressed.CONTROL;
+			var r_y = controls.RESET;
 			#end
 
 			if(ctrl)

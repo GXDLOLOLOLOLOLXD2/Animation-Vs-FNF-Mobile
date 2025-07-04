@@ -33,7 +33,7 @@ import mobile.pyschlua.*;
  * author: @GXDLOLOLOLOLOLXD2, azeitona-x7 and Idklool for the extra utils... XD
  * 
 */
-class MultipleUtil
+class Util // MultipleUtil
 {
     public static function createWatermarkRight(text:String, fontSize:Int = 25, offsetX:Float = 995, offsetY:Float = 50):FlxText
     {

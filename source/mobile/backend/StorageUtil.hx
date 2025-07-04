@@ -47,6 +47,8 @@ import mobile.options.*;
 import mobile.extras.*;
 import mobile.pyschlua.*;
 
+import mobile.Util;
+
 using StringTools;
 
 /**
