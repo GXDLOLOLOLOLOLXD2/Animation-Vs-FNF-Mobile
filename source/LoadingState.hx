@@ -136,12 +136,10 @@ class LoadingState extends MusicBeatState
 	}
 	
 	static function getSongPath():String {
-	{
 		return Paths.getPath('songs:Inst/' + Paths.formatToSongPath(PlayState.SONG.song) + '.ogg', SOUND);
 	}
 	
 	static function getVocalPath():String {
-	{
 		return Paths.getPath('songs:Voices/' + Paths.formatToSongPath(PlayState.SONG.song) + '.ogg', SOUND);
 	}
 	
