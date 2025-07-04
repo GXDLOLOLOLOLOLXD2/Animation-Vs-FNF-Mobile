@@ -120,8 +120,10 @@ class CoolUtil
 	public static function precacheSound(sound:String, ?library:String = null):Void
 	{
 		var path = Paths.sound(sound, library);
-		if (!Assets.cache.hasSound(path)) {
-			FlxG.sound.cache(path);
+		if (!FlxG.sound.cache.exists(path)) {
+			var s:FlxSound = new FlxSound();
+			s.load(path);
+			FlxG.sound.cache.add(path, s);
 		}
 	}
 

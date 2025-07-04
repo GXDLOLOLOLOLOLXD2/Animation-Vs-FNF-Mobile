@@ -22,6 +22,8 @@ import WeekData;
 import sys.FileSystem;
 #end
 
+import CoolUtil;
+
 using StringTools;
 
 class FreeplayState extends MusicBeatState
@@ -52,6 +54,11 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+		// To no gets lag
+		CoolUtil.precacheSound('missnote1');
+		CoolUtil.precacheSound('missnote2');
+		CoolUtil.precacheSound('missnote3');
+
 		#if MODS_ALLOWED
 		Paths.destroyLoadedImages();
 		#end
@@ -186,6 +193,7 @@ class FreeplayState extends MusicBeatState
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
+
 		super.create();
 
 		//#if mobile
@@ -308,35 +316,54 @@ class FreeplayState extends MusicBeatState
 			{
 				var instSound:openfl.media.Sound = Paths.inst(PlayState.SONG.song);
 				var vocalsSound:openfl.media.Sound = Paths.voices(PlayState.SONG.song);
-				var musicSnd:FlxSound = new FlxSound();
-				if (instSound != null) {
+
+				var musicSnd:FlxSound = null;
+				var voxSnd:FlxSound = null;
+
+				if (instSound != null)
+				{
+					musicSnd = new FlxSound();
 					musicSnd.loadEmbedded(instSound);
+
+					if (vocalsSound != null)
+					{
+						voxSnd = new FlxSound();
+						voxSnd.loadEmbedded(vocalsSound);
+						vocals = voxSnd;
+					}
+					else {
+						vocals = null;
+					}
 				}
-				var voxSnd:FlxSound = new FlxSound().loadEmbedded(vocalsSound);
-				vocals = voxSnd;
 
 				#if PRELOAD_ALL
-				destroyFreeplayVocals();
-				FlxG.sound.music.volume = 0;
-				Paths.currentModDirectory = songs[curSelected].folder;
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices && vocalsSound != null) {
-					FlxG.sound.list.add(voxSnd); // please return Sound but no String plspls
-				}//else {
-					//vocals = new FlxSound();
-				//}
-				
-				FlxG.sound.list.add(musicSnd);
-				FlxG.sound.playMusic(musicSnd); // please return Sound but no String plspls
-				if (vocals != null) {
-					vocals.play();
-					vocals.persist = true;
-					vocals.looped = true;
-					vocals.volume = 0.7;
+				if (musicSnd != null) {
+					destroyFreeplayVocals();
+					FlxG.sound.music.volume = 0;
+					Paths.currentModDirectory = songs[curSelected].folder;
+					var poop = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+
+					if (PlayState.SONG.needsVoices && voxSnd != null)
+					{
+						FlxG.sound.list.add(voxSnd);
+					}
+					FlxG.sound.list.add(musicSnd);
+
+					FlxG.sound.playMusic(musicSnd);
+
+					if (vocals != null)
+					{
+						vocals.play();
+						vocals.persist = true;
+						vocals.looped = true;
+						vocals.volume = 0.7;
+					}
+					instPlaying = curSelected;
+					#end
+				} else {
+					trace("InstSound not found for the music: " + PlayState.SONG.song); // if is null, gets a debug warning error
 				}
-				instPlaying = curSelected;
-				#end
 			}
 		}
 

@@ -38,7 +38,6 @@ import flixel.ui.FlxButton as UIButton;
 import mobile.objects.TouchButton;
 import mobile.backend.TouchUtil;
 import mobile.objects.Alphabet;
-import *;
 import options.*;
 
 import mobile.*;
