@@ -14,8 +14,7 @@ import openfl.display.BitmapData;
 #end
 
 import mobile.Util;
-
-import flash.media.Sound;
+import openfl.media.Sound;
 
 using StringTools;
 
@@ -143,7 +142,7 @@ class Paths
 		return getPath('$key.lua', TEXT, library);
 	}
 
-	static public function sound(key:String, ?library:String):Dynamic
+	static public function sound(key:String, ?library:String):Sound // bruh
 	{
 		#if MODS_ALLOWED
 		var file:String = modsSounds(key);
@@ -154,7 +153,7 @@ class Paths
 			return customSoundsLoaded.get(file);
 		}
 		#end
-		return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
+		return Sound.fromFile('assets/sounds/$key.$SOUND_EXT');
 	}
 	
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
@@ -168,7 +167,7 @@ class Paths
 		return getPath('videos/$key.mp4', BINARY, library);
 	}
 
-	inline static public function music(key:String, ?library:String):Dynamic
+	inline static public function music(key:String, ?library:String):Sound // bruh
 	{
 		#if MODS_ALLOWED
 		var file:String = modsMusic(key);
@@ -179,10 +178,10 @@ class Paths
 			return customSoundsLoaded.get(file);
 		}
 		#end
-		return getPath('music/$key.$SOUND_EXT', MUSIC, library);
+		return Sound.fromFile('assets/music/$key.$SOUND_EXT');
 	}
 
-	inline static public function voices(song:String):Any
+	inline static public function voices(song:String):Sound // bruh
 	{
 		#if MODS_ALLOWED
 		var file:Sound = returnSongFile(modsSongs(song.toLowerCase().replace(' ', '-') + '/Voices'));
@@ -190,10 +189,10 @@ class Paths
 			return file;
 		}
 		#end
-		return 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Voices.$SOUND_EXT';
+		return Sound.fromFile('assets/songs/${song.toLowerCase().replace(' ', '-')}/Voices.$SOUND_EXT');
 	}
 
-	inline static public function inst(song:String):Any
+	inline static public function inst(song:String):Sound // beruh
 	{
 		#if MODS_ALLOWED
 		var file:Sound = returnSongFile(modsSongs(song.toLowerCase().replace(' ', '-') + '/Inst'));
@@ -201,7 +200,7 @@ class Paths
 			return file;
 		}
 		#end
-		return 'songs:assets/songs/${song.toLowerCase().replace(' ', '-')}/Inst.$SOUND_EXT';
+		return Sound.fromFile('assets/songs/${song.toLowerCase().replace(' ', '-')}/Inst.$SOUND_EXT');
 	}
 
 	#if MODS_ALLOWED

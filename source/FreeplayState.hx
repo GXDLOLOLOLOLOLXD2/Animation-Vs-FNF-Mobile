@@ -306,23 +306,34 @@ class FreeplayState extends MusicBeatState
 		{
 			if(instPlaying != curSelected)
 			{
+				var instSound:openfl.media.Sound = Paths.inst(PlayState.SONG.song);
+				var vocalsSound:openfl.media.Sound = Paths.voices(PlayState.SONG.song);
+				var musicSnd:FlxSound = new FlxSound();
+				if (instSound != null) {
+					musicSnd.loadEmbedded(instSound);
+				}
+				var voxSnd:FlxSound = new FlxSound().loadEmbedded(vocalsSound);
+				vocals = voxSnd;
+
 				#if PRELOAD_ALL
 				destroyFreeplayVocals();
 				FlxG.sound.music.volume = 0;
 				Paths.currentModDirectory = songs[curSelected].folder;
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song), true); // please return Sound but no String plspls
-				else
-					vocals = new FlxSound();
+				if (PlayState.SONG.needsVoices && vocalsSound != null) {
+					FlxG.sound.list.add(voxSnd); // please return Sound but no String plspls
+				//else
+					//vocals = new FlxSound();
 				
-				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7, true); // please return Sound but no String plspls
-				vocals.play();
-				vocals.persist = true;
-				vocals.looped = true;
-				vocals.volume = 0.7;
+				FlxG.sound.list.add(musicSnd);
+				FlxG.sound.playMusic(musicSnd); // please return Sound but no String plspls
+				if (vocals != null) {
+					vocals.play();
+					vocals.persist = true;
+					vocals.looped = true;
+					vocals.volume = 0.7;
+				}
 				instPlaying = curSelected;
 				#end
 			}
