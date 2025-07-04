@@ -1693,7 +1693,8 @@ class PlayState extends MusicBeatState
 		char.y += char.positionArray[1];
 	}
 
-	public function startVideo(name:String):Void {
+	public function startVideo(name:String):Void
+	{
 		#if VIDEOS_ALLOWED
 		var foundFile:Bool = false;
 		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
@@ -1702,6 +1703,16 @@ class PlayState extends MusicBeatState
 			foundFile = true;
 		}
 		#end
+
+		// Cutscene use
+		/*#if VIDEOS_ALLOWED
+    		#if windows
+        		VideoHandler.playVideo("yourcutscene.webm");
+    		#elseif android
+        		// especific use of hxvlc
+        		AndroidVideo.play("yourcutscene.mp4");
+    		#end
+		#end*/
 
 		if(!foundFile) {
 			fileName = Paths.video(name);

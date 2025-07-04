@@ -28,6 +28,10 @@ import mobile.extras.*;
 import mobile.pyschlua.*;
 // XD
 
+// ...
+import String;
+// ,_,
+
 /*
  * A file for internal founder and multiples folders list
  * author: @GXDLOLOLOLOLOLXD2, azeitona-x7 and Idklool for the extra utils... XD

@@ -57,14 +57,16 @@
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
-	
-	<library name="videos"        preload="true" />
+
 	<section if="PRELOAD_ALL">
 		<library name="songs"         preload="true" />
 		<library name="shared"        preload="true" />
 		<library name="week6"         preload="true" />
 	</section>
-	
+
+	<!-- For Enabled VIDEOS_ALLOWED -->
+	<library name="videos"        preload="true" />
+
 	<section if="NO_PRELOAD_ALL">
 		<library name="songs"         preload="false" />
 		<library name="shared"        preload="false" />
@@ -80,6 +82,7 @@
 	<assets path="assets/shared"        library="shared"        exclude="*.mp3" unless="web"/>
 	<assets path="assets/week6"         library="week6"         exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
+	<assets path="assets/videos" library="videos" if="VIDEOS_ALLOWED"/> <!-- For Cutscenes -->
 	<assets path="assets/videos" exclude="*.mp3" if="web"/>
     <assets path="assets/videos" exclude="*.ogg" unless="web"/>
 
