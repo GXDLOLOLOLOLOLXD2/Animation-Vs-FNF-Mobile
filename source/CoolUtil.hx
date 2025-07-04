@@ -122,7 +122,7 @@ class CoolUtil
 	{
 		var path = Paths.sound(sound, library);
 
-		if (!Assets.exists(path))
+		if (!Assets.exists(path)) { // lol
 			trace('Sound $sound not found at $path');
 			return;
 		}

@@ -68,7 +68,8 @@ import mobile.objects.TouchButton;
 import mobile.objects.TouchPad;
 import mobile.input.MobileInputID;
 import mobile.Util;
-import pyschlua.LuaUtils;
+import psychlua.LuaUtils;
+import psychlua.PlayField;
 
 #if sys
 import sys.FileSystem;
@@ -4155,7 +4156,7 @@ class PlayState extends MusicBeatState
 
 	// Some Mobile func
 
-	var playFields:FlxTypedGroup<PlayField> = new FlxTypedGroup<PlayField>();
+	var playFields:Array<PlayField> = [new PlayField()];
 	public function callOnScripts(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic
 	{
 		var returnVal:Dynamic = LuaUtils.Function_Continue;
