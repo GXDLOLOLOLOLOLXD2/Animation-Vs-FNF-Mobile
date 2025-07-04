@@ -97,6 +97,9 @@
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
 
+	<!-- LibVLC Logging for hxCodec -->
+	<haxedef name="HXC_LIBVLC_LOGGING" if="debug" />
+
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 
