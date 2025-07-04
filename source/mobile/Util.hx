@@ -123,7 +123,7 @@ class Util // MultipleUtil
         var files = [];
         for (id in all)
         {
-            if (id != null && id.startsWith(prefix))
+            if (id != null && id.indexOf(prefix) == 0)
                 files.push(id);
         }
         return files;
@@ -135,7 +135,7 @@ class Util // MultipleUtil
         var filtered:Array<String> = [];
         for (id in all)
         {
-            if (id != null && id.startsWith(prefix))
+            if (id != null && id.indexOf(prefix) == 0)
                 filtered.push(id);
         }
         return filtered;
@@ -153,7 +153,7 @@ class Util // MultipleUtil
         var all = openfl.utils.Assets.list();
         var filtered = [];
         for (id in all)
-            if (id != null && id.startsWith(prefix))
+            if (id != null && id.indexOf(prefix) == 0)
                 filtered.push(id);
         return filtered;
     }
@@ -163,7 +163,7 @@ class Util // MultipleUtil
     {
         var all = openfl.utils.Assets.list();
         for (id in all)
-            if (id != null && id.startsWith(prefix))
+            if (id != null && id.indexOf(prefix) == 0)
                 return true;
         return false;
     }
@@ -179,13 +179,13 @@ class Util // MultipleUtil
 	//#if sys
 	private static function createDirectory(path:String):Void
     {
-        #if mobile
+        //#if mobile
         // are impossible create a directory internally because neededs be embed in the project
-        #else
+        //#else
 		if (!FileSystem.exists(path)) {
 			FileSystem.createDirectory(path);
 		}
-        #end
+        //#end
 	}
 
 	/**
@@ -194,9 +194,9 @@ class Util // MultipleUtil
 	 */
 	public static function deleteFile(path:Dynamic):Void
     {
-        #if mobile
+        //#if mobile
         // are impossible delete a file internally because are embed in the project
-        #else
+        //#else
 		if (Std.isOfType(path, String)) {
 			if (FileSystem.exists(path)) {
 				FileSystem.deleteFile(path);
@@ -208,16 +208,16 @@ class Util // MultipleUtil
 				}
 			}
 		}
-        #end
+        //#end
 	}
 
 	private static function saveContent(path:String, content:String):Void
     {
-        #if mobile
+        //#if mobile
         // are impossible save a content internally because are embeded in the project
-        #else
+        //#else
 		File.saveContent(path, content);
-        #end
+        //#end
 	}
 	//#end
 
@@ -277,10 +277,10 @@ class Util // MultipleUtil
     {
         var something:Array<String> = [];
         #if mobile 
-        for (folder in Assets.list().filter(text -> text != null && text.contains(library)))
+        for (folder in Assets.list().filter(text -> text != null && text.indexOf(library) >= 0))
         {
-          if (folder != null && !folder.startsWith('.'))
-          something.push(folder);
+            if (folder != null && folder.charAt(0) != ".")
+                something.push(folder);
         }
         return something;
         #else
@@ -316,6 +316,8 @@ class Util // MultipleUtil
 		#end
 	}
 
+    // ----- Some Funny Functions -----
+
     // Alternables to use Path.* of Haxetoolkit:
     /**
      * Gets the extension of the file
@@ -328,16 +330,12 @@ class Util // MultipleUtil
     public static function getExtension(filePath:String):String
     {
         #if mobile
-        // Implementação otimizada ou específica para mobile, se necessário
-        // Por exemplo, pode-se usar APIs nativas ou uma lógica mais leve.
         var lastDotIndex = filePath.lastIndexOf('.');
         if (lastDotIndex != -1 && lastDotIndex < filePath.length - 1) {
             return filePath.substring(lastDotIndex + 1);
         }
         return "";
         #else
-        // Implementação para desktop
-        // Usando a funcionalidade nativa do Haxe para robustez.
         return Path.extension(filePath);
         #end
     }
@@ -355,9 +353,9 @@ class Util // MultipleUtil
         // Implemetion for mobile
         var lastSlashIndex = -1;
         #if windows
-        lastSlashIndex = filePath.lastIndexOf('\\'); // Para Windows
+        lastSlashIndex = filePath.lastIndexOf('\\');
         #else
-        lastSlashIndex = filePath.lastIndexOf('/'); // Para Linux/macOS/outros
+        lastSlashIndex = filePath.lastIndexOf('/');
         #end
 
         if (lastSlashIndex != -1) {
@@ -396,4 +394,5 @@ class Util // MultipleUtil
         return Path.fileName(fullPathWithoutExt);
         #end
     }
+    // ---- End of Util class ----
 }

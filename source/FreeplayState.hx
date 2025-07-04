@@ -189,7 +189,7 @@ class FreeplayState extends MusicBeatState
 		super.create();
 
 		//#if mobile
-		addTouchPad("LEFT_FULL", "A_B_X_Y"); // Test
+		addTouchPad("LEFT_FULL", "A_B_C_X_Y"); // Test
 		addTouchPadCamera();
 		//#end
 	}
@@ -198,7 +198,7 @@ class FreeplayState extends MusicBeatState
 		changeSelection(0, false);
 		super.closeSubState();
 		removeTouchPad();
-		addTouchPad("LEFT_FULL", "A_B_X_Y");
+		addTouchPad("LEFT_FULL", "A_B_C_X_Y");
 		addTouchPadCamera();
 	}
 
@@ -253,11 +253,11 @@ class FreeplayState extends MusicBeatState
 		positionHighscore();
 
 		#if mobile
-		var shift = touchPad.buttonX.justPressed // no real implemention for mobile of x/shift
-		var space = touchPad.buttonX.justPressed; // X replace space function
+		var reset = touchPad.buttonC.justPressed; // pressing C will resets the score of the song
+		var space = touchPad.buttonX.justPressed; // pressing X will play the music of the song
 		var ctrl = touchPad.buttonY.justPressed; // Y replace ctrl function
 		#else
-		var shift = FlxG.keys.pressed.SHIFT;
+		var reset = controls.RESET;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 		#end
@@ -267,6 +267,8 @@ class FreeplayState extends MusicBeatState
 		var downP = controls.UI_DOWN_P; // down
 		var accepted = controls.ACCEPT; // a
 		var _back = controls.BACK; // b
+
+		var shift = FlxG.keys.pressed.SHIFT;
 
 		var shiftMult:Int = 1;
 		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
@@ -300,7 +302,7 @@ class FreeplayState extends MusicBeatState
 			openSubState(new GameplayChangersSubstate());
 			removeTouchPad();
 		}
-		else if(space)
+		else if(space) // play the "assets song" pressing X in mobile
 		{
 			if(instPlaying != curSelected)
 			{
@@ -350,7 +352,7 @@ class FreeplayState extends MusicBeatState
 				colorTween.cancel();
 			}
 			
-			if (shift){
+			if (shift){ // not possible in mobile
 				LoadingState.loadAndSwitchState(new ChartingState());
 				removeTouchPad();
 			}else{
@@ -362,7 +364,7 @@ class FreeplayState extends MusicBeatState
 					
 			destroyFreeplayVocals();
 		}
-		else if(controls.RESET)
+		else if(reset) // pressing C in mobile
 		{
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
