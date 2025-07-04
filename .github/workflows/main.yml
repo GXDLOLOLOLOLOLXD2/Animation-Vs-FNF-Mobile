@@ -36,23 +36,23 @@ jobs:
         run: |
           haxelib setup ~/haxelib
           haxelib install flixel 5.6.1
-          haxelib set flixel 5.6.1
           haxelib install flixel-addons
-          haxelib install flixel-ui 2.6.4
-          haxelib set flixel-ui 2.6.4
+          haxelib install flixel-ui 2.6.1
           haxelib install hscript
           haxelib git linc_luajit https://github.com/superpowers04/linc_luajit.git
           haxelib install hxcpp-debug-server
           haxelib install lime 8.2.2
-          haxelib set lime 8.2.2
           haxelib install openfl 9.4.1
-          haxelib set openfl 9.4.1
       - name: Configuring Android
         run: |
           haxelib run lime config ANDROID_SDK $ANDROID_HOME
           haxelib run lime config ANDROID_NDK_ROOT ${{ steps.setup-ndk.outputs.ndk-path }}
           haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
           haxelib run lime config ANDROID_SETUP true
+          haxelib set flixel 5.6.1
+          haxelib set flixel-ui 2.6.1
+          haxelib set lime 8.2.2
+          haxelib set openfl 9.4.1
       - name: Building the game
         run: haxelib run lime build android
       - name: Uploading artifact

@@ -44,7 +44,7 @@ jobs:
           haxelib install openfl 9.4.1 --quiet
           haxelib install flixel 5.6.1 --quiet
           haxelib install flixel-addons --quiet
-          haxelib install flixel-ui 2.6.4 --quiet
+          haxelib install flixel-ui 2.6.1 --quiet
           haxelib install flixel-tools --quiet
           haxelib install actuate --quiet
           haxelib install hscript --quiet
@@ -62,8 +62,10 @@ jobs:
           haxelib run lime config ANDROID_NDK_ROOT "${{ steps.ndk.outputs.ndk-path }}"
           haxelib run lime config JAVA_HOME $JAVA_HOME
           haxelib run lime config ANDROID_SETUP true
-          haxelib set openfl 9.4.1
           haxelib set lime 8.2.2
+          haxelib set openfl 9.4.1
+          haxelib set flixel 5.6.1
+          haxelib set flixel-ui 2.6.1
 
       - name: Build APK
         run: haxelib run lime build android --app-version="1.0.0-${{ github.run_id }}"
