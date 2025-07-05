@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Funkin': Vs Animation" file="VsAnimation" packageName="com.vsanimation.psychengine" package="com.vsanimation.psychengine" main="Main" version="0.2.7" company="ShadowMario" />
+	<app title="Friday Night Funkin': Vs Animation" file="VsAnimation" packageName="com.vsanimation.psychengine" package="com.vsanimation.psychengine" main="openfl.display.Sprite" version="0.2.7" company="ShadowMario" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -40,8 +40,10 @@
 
 	<classpath name="source" />
 
-	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
-	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
+	<!-- <assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
+	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/> -->
+	<assets path="assets/preload" rename="assets" />
+	<!-- <assets path="assets/preload/mobile" rename="assets/mobile" if="mobile" /> -->
 	<assets path="assets/fonts" embed='true'/>
 	
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
@@ -151,6 +153,7 @@
 
 	<!-- ___ Some Function's ___ -->
 	<define name="TOUCH_CONTROLS" if="mobile || web"/>
+
 	<certificate path="key.keystore" password="sourcingurpassword" alias="sourcingurkey" alias-password="sourcingurpassword" if="android" unless="debug" />
 
 	<!-- _________________________________ Custom _______________________________ -->

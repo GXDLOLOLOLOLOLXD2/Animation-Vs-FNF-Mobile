@@ -7,8 +7,8 @@ import hxcodec.flixel.FlxVideoSprite;
 
 /*
  * Video Handler Working using hxCodec
- * by @azeitona-x7(youtube channel)
-*/
+ * by @azeitona-x7 (youtube channel)
+ */
 class MP4Handler {
 	public var video:FlxVideoSprite;
 	public var finishCallback:Void->Void;
@@ -19,16 +19,13 @@ class MP4Handler {
 		var path = Paths.video(file);
 
 		video = new FlxVideoSprite();
-		video.play(path, false);
-
-		FlxG.state.add(video);
-
-		video.finishCallback = function()
-		{
+		video.play(path, false, function() {
 			trace("Video Finished!: " + file);
 			if (finishCallback != null)
 				finishCallback();
-		};
+		});
+
+		FlxG.state.add(video);
 	}
 
 	public function playBackground(file:String):Void {
@@ -36,7 +33,6 @@ class MP4Handler {
 
 		video = new FlxVideoSprite();
 		video.play(path, true);
-
 		FlxG.state.add(video);
 	}
 
