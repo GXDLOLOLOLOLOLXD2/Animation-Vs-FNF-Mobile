@@ -9,7 +9,7 @@ import openfl.display.FPS;
 import openfl.display.Sprite;
 import openfl.events.Event;
 
-// import mobile.backend.MobileData;
+import mobile.backend.MobileData;
 
 class Main extends Sprite
 {
@@ -42,7 +42,7 @@ class Main extends Sprite
 	{
 		super();
 
-		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
+		// addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
 
 		MobileData.init();
 
@@ -85,16 +85,7 @@ class Main extends Sprite
 		#end
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(
-			gameWidth,
-			gameHeight,
-			initialState,
-			zoom,
-			framerate,
-			framerate,
-			skipSplash,
-			startFullscreen
-		));
+		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, skipSplash, startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
