@@ -1,0 +1,23 @@
+<!-- Main libraries -->
+<haxelib name="hxCodec" />
+<haxelib name="hxcpp" />
+
+<!-- Game engine and dependencies -->
+<haxelib name="openfl" />
+<haxelib name="lime" />
+<haxelib name="actuate" />
+<haxelib name="flixel" />
+<haxelib name="flixel-addons" />
+<haxelib name="flixel-ui" />
+
+<!-- Extra features -->
+<haxelib name="hscript" />
+<haxelib name="linc_luajit" />
+<haxelib name="discord_rpc" />
+<haxelib name="extension-webm" />
+<haxelib name="extension-webview" />
+<haxelib name="extension-androidtools" />
+
+<!-- Psych Engine Extras -->
+<haxelib name="faxe" />
+<haxelib name="hxcpp-debug-server" />

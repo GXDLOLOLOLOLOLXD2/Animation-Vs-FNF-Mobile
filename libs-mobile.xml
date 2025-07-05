@@ -1,0 +1,24 @@
+<!-- Main libraries -->
+<haxelib name="hxCodec" /> <!-- Used for video playback (MP4 and VLC) -->
+<haxelib name="hxvlc" /> <!-- Bindings for VLC (included within the hxCodec itself in some forks) -->
+<haxelib name="hxcpp" /> <!-- C++ backend required for Android -->
+
+<!-- Game engine and dependencies -->
+<haxelib name="openfl" />
+<haxelib name="lime" />
+<haxelib name="actuate" />
+<haxelib name="flixel" />
+<haxelib name="flixel-addons" />
+<haxelib name="flixel-ui" />
+
+<!-- Extra features -->
+<haxelib name="hscript" /> <!-- Support for Haxe scripts -->
+<haxelib name="linc_luajit" /> <!-- Support for LuaJIT for mods -->
+<haxelib name="discord_rpc" /> <!-- RPC for desktop (ignored on Android) -->
+<haxelib name="extension-webm" /> <!-- WebM Videos -->
+<haxelib name="extension-webview" /> <!-- Webview (if it is enabled) -->
+<haxelib name="extension-androidtools" /> <!-- Android Utilities -->
+
+<!-- Extras (used by some forks of the Psych Engine) -->
+<haxelib name="faxe" /> <!-- Faxe is a wrapper for the Switch -->
+<haxelib name="hxcpp-debug-server" /> <!-- Debug via TCP (optional on mobile) -->
