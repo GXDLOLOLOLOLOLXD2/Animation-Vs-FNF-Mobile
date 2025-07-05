@@ -23,7 +23,7 @@ class MP4Handler {
 			trace("Video Finished!: " + file);
 			if (finishCallback != null)
 				finishCallback();
-		}
+		});
 
 		video.play(path, false);
 		FlxG.state.add(video);

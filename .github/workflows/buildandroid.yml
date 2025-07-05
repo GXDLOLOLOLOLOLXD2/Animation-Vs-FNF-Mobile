@@ -1,0 +1,44 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: ["mobile"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Clone repository
+        uses: actions/checkout@v3
+
+      - name: ⚙️ Install haxe
+        uses: krdlab/setup-haxe@v1
+        with:
+          haxe-version: 4.3.2
+
+      - name: 📦 Install project dependencies
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install lime 8.2.2
+          haxelib install openfl 9.4.1
+          haxelib install flixel 5.6.1
+          haxelib install flixel-addons
+          haxelib install flixel-ui 2.6.4
+          haxelib install hxCodec
+          haxelib install hxvlc
+          haxelib install actuate
+          haxelib install hscript
+          haxelib install linc_luajit
+          haxelib install extension-androidtools
+          haxelib install extension-webm
+          haxelib install extension-webview
+          haxelib install faxe
+          haxelib install hxcpp-debug-server
+          haxelib run lime setup
+          haxelib run openfl setup
+
+      - name: 📱 Build Android APK
+        run: |
+          haxelib run lime build android -release -D analyzer-optimize

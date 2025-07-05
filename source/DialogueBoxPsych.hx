@@ -17,6 +17,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 import openfl.utils.Assets;
+import mobile.Util;
 
 using StringTools;
 
@@ -89,11 +90,11 @@ class DialogueCharacter extends FlxSprite
 
 		#if MODS_ALLOWED
 		var path:String = Paths.modFolders(characterPath);
-		if (!FileSystem.exists(path)) {
+		if (!Util.exists(path)) {
 			path = Paths.getPreloadPath(characterPath);
 		}
 
-		if(!FileSystem.exists(path)) {
+		if(!Util.exists(path)) {
 			path = Paths.getPreloadPath('images/dialogue/' + DEFAULT_CHARACTER + '.json');
 		}
 		rawJson = File.getContent(path);
@@ -290,7 +291,19 @@ class DialogueBoxPsych extends FlxSpriteGroup
 			bgFade.alpha += 0.5 * elapsed;
 			if(bgFade.alpha > 0.5) bgFade.alpha = 0.5;
 
-			if(PlayerSettings.player1.controls.ACCEPT) {
+			#if android
+			var justTouched:Bool = false;
+
+		    for (touch in FlxG.touches.list)
+		    {
+			    if (touch.justPressed)
+			    {
+			        justTouched = true;
+			    }
+		    }
+		    #end
+
+			if(PlayerSettings.player1.controls.ACCEPT #if android || justTouched #end) {
 				if(!daText.finishedText) {
 					if(daText != null) {
 						daText.killTheTimer();
@@ -513,9 +526,9 @@ class DialogueBoxPsych extends FlxSpriteGroup
 
 	public static function parseDialogue(path:String):DialogueFile {
 		#if MODS_ALLOWED
-		if(FileSystem.exists(path))
+		if(Util.exists(path))
 		{
-			return cast Json.parse(File.getContent(path));
+			return cast Json.parse(Util.getContent(path));
 		}
 		#end
 		return cast Json.parse(Assets.getText(path));

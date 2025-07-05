@@ -98,6 +98,13 @@
 	<!-- Show debug traces for hxCodec -->
 	<haxedef name="HXC_DEBUG_TRACE" if="debug" />
 
+	<!-- make's game use less ram -->
+	<haxedef name="HXCPP_GC_BIG_BLOCKS"/>
+
+	<!-- Akways enable Null Object Reference check -->
+	<haxedef name="HXCPP_CHECK_POINTER" if="release" />
+	<haxedef name="HXCPP_STACK_LINE" if="release" />
+
 	<!-- LibVLC Logging for hxCodec -->
 	<haxedef name="HXC_LIBVLC_LOGGING" if="debug" />
 
