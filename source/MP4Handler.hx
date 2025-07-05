@@ -20,7 +20,7 @@ class MP4Handler {
 
 		video = new FlxVideoSprite();
 		video.play(path, false);
-		video.onComplete = function() {
+		video.finishCallback = function() {
 			trace("Video Finished!: " + file);
 			if (finishCallback != null)
 				finishCallback();
