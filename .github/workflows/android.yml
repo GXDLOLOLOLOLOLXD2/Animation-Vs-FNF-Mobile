@@ -83,7 +83,7 @@ jobs:
           haxelib set openfl 9.4.1
 
       - name: Compile
-        run: haxelib run lime build android --app-version="1.0.0-${{ github.run_id }}"
+        run: haxelib run openfl build android --app-version="${{ github.run_id }}" -final
 
       - name: Publish Build
         uses: actions/upload-artifact@main
