@@ -3,7 +3,7 @@ package;
 #if VIDEOS_ALLOWED
 import flixel.FlxG;
 import flixel.util.FlxTimer;
-import video.VideoSprite;
+import hxcodec.flixel.FlxVideoSprite;
 import lime.app.Application;
 
 /*
@@ -11,7 +11,7 @@ import lime.app.Application;
  * by @azeitona-x7(youtube channel)
 */
 class MP4Handler {
-	public var video:VideoSprite;
+	public var video:FlxVideoSprite;
 	public var finishCallback:Void->Void;
 
 	public function new() {}
@@ -20,7 +20,7 @@ class MP4Handler {
 	public function playMP4(file:String):Void {
 		var path = Paths.video(file); // Ex: 'intro' => assets/videos/intro.mp4
 
-		video = new VideoSprite();
+		video = new FlxVideoSprite();
 		video.play(path, false);
 
 		video.finishCallback = function() {
@@ -36,7 +36,7 @@ class MP4Handler {
 	public function playBackground(file:String):Void {
 		var path = Paths.video(file);
 
-		video = new VideoSprite();
+		video = new FlxVideoSprite();
 		video.play(path, true); // true = loop
 
 		Application.current.window.stage.addChildAt(video, 0);
