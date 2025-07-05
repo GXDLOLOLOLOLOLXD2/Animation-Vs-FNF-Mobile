@@ -21,21 +21,14 @@ class MP4Handler {
 		video = new FlxVideoSprite();
 		video.play(path, false);
 
-		// Adiciona o vídeo ao grupo atual do Flixel
 		FlxG.state.add(video);
 
-		// Timer para checar se terminou
-		FlxG.camera.flash(0xFF000000, 0.1); // só para ter um feedback visual (opcional)
-		new FlxTimer().start(0.1, function checkFinished(_) {
-			if (!video.playing) {
-				trace("Video Finished!: " + file);
-				if (finishCallback != null)
-					finishCallback();
-			} else {
-				// Continua checando
-				checkFinished(_);
-			}
-		});
+		video.finishCallback = function()
+		{
+			trace("Video Finished!: " + file);
+			if (finishCallback != null)
+				finishCallback();
+		};
 	}
 
 	public function playBackground(file:String):Void {
@@ -44,7 +37,7 @@ class MP4Handler {
 		video = new FlxVideoSprite();
 		video.play(path, true);
 
-		FlxG.state.add(video); // Adiciona ao fundo
+		FlxG.state.add(video);
 	}
 
 	public function stop():Void {
