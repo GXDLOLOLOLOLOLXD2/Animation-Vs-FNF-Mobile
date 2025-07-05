@@ -68,8 +68,6 @@ import mobile.objects.TouchButton;
 import mobile.objects.TouchPad;
 import mobile.input.MobileInputID;
 import mobile.Util;
-import psychlua.LuaUtils;
-import psychlua.PlayField;
 
 #if sys
 import sys.FileSystem;
@@ -3026,6 +3024,16 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
+	public function triggerDodge():Void // testing if this really needs
+	{
+		if (boyfriend.animation.curAnim.name == "dodge") return;
+
+		boyfriend.playAnim("dodge", true);
+
+		FlxG.sound.play(Paths.sound('dodge'));
+	}
+
+
 	public var isDead:Bool = false; //Don't mess with this on Lua!!!
 	function doDeathCheck(?skipHealthCheck:Bool = false)
 	{
@@ -3792,9 +3800,9 @@ class PlayState extends MusicBeatState
 	public var totalPlayed:Int = 0;
 	public var totalNotesHit:Float = 0.0;
 
-	public function healthbarshake(intensity:Float)
+		public function healthbarshake(intensity:Float)
 		{
-		new FlxTimer().start(0.01, function(tmr:FlxTimer)
+			new FlxTimer().start(0.01, function(tmr:FlxTimer)
 			{
 				iconP1.y += (10 * intensity);
 				iconP2.y += (10 * intensity);
@@ -4152,170 +4160,6 @@ class PlayState extends MusicBeatState
 			}
 		}
 		return -1;
-	}
-
-	// Some Mobile func
-
-	var playFields:Array<PlayField> = [new PlayField()];
-	public function callOnScripts(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic
-	{
-		var returnVal:Dynamic = LuaUtils.Function_Continue;
-		if(args == null) args = [];
-		if(exclusions == null) exclusions = [];
-		if(excludeValues == null) excludeValues = [LuaUtils.Function_Continue];
-
-		var result:Dynamic = callOnLuas(funcToCall, args, ignoreStops, exclusions, excludeValues);
-		if(result == null || excludeValues.contains(result)) result = callOnHScript(funcToCall, args, ignoreStops, exclusions, excludeValues);
-		return result;
-	}
-
-	public function callOnLuas(funcToCall:String, args:Array<Dynamic> = null, ignoreStops = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic
-	{
-		var returnVal:Dynamic = LuaUtils.Function_Continue;
-		#if LUA_ALLOWED
-		if(args == null) args = [];
-		if(exclusions == null) exclusions = [];
-		if(excludeValues == null) excludeValues = [LuaUtils.Function_Continue];
-
-		var arr:Array<FunkinLua> = [];
-		for (script in luaArray)
-		{
-			if(script.closed)
-			{
-				arr.push(script);
-				continue;
-			}
-
-			if(exclusions.contains(script.scriptName))
-				continue;
-
-			var myValue:Dynamic = script.call(funcToCall, args);
-			if((myValue == LuaUtils.Function_StopLua || myValue == LuaUtils.Function_StopAll) && !excludeValues.contains(myValue) && !ignoreStops)
-			{
-				returnVal = myValue;
-				break;
-			}
-
-			if(myValue != null && !excludeValues.contains(myValue))
-				returnVal = myValue;
-
-			if(script.closed) arr.push(script);
-		}
-
-		if(arr.length > 0)
-			for (script in arr)
-				luaArray.remove(script);
-		#end
-		return returnVal;
-	}
-
-	public function callOnHScript(funcToCall:String, args:Array<Dynamic> = null, ?ignoreStops:Bool = false, exclusions:Array<String> = null, excludeValues:Array<Dynamic> = null):Dynamic // NOT using Right Now
-	{
-		return LuaUtils.Function_Continue;
-	}
-
-	private function onButtonPress(button:TouchButton):Void
-	{
-		if (button.IDs.filter(id -> id.toString().startsWith("EXTRA")).length > 0)
-			return;
-
-		var buttonCode:Int = (button.IDs[0].toString().startsWith('NOTE')) ? button.IDs[0] : button.IDs[1];
-
-		if (cpuControlled || paused || !startedCountdown) return;
-
-		if (buttonCode > -1 && button.justPressed)
-		{
-			if (!boyfriend.stunned && generatedMusic && !endingSong)
-			{
-				// more accurate hit time for the ratings?
-				var lastTime:Float = Conductor.songPosition;
-				Conductor.songPosition = FlxG.sound.music.time;
-
-				var canMiss:Bool = !ClientPrefs.ghostTapping;
-
-				var pressNotes:Array<Note> = [];
-
-				var ghostTapped:Bool = true;
-				for (field in playFields.members)
-				{
-					if (field.playerControls && field.inControl && !field.autoPlayed)
-					{
-						var sortedNotesList:Array<Note> = field.getTapNotes(buttonCode);
-						sortedNotesList.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-
-						if (sortedNotesList.length > 0)
-						{
-							pressNotes.push(sortedNotesList[0]);
-							field.noteHitCallback(sortedNotesList[0], field);
-						}
-					}
-				}
-
-				if (pressNotes.length == 0)
-				{
-					callOnScripts('onGhostTap', [buttonCode]);
-					if (canMiss)
-					{
-						noteMissPress(buttonCode);
-						callOnScripts('noteMissPress', [buttonCode]);
-					}
-				}
-
-				// I dunno what you need this for but here you go
-				//									- Shubs
-
-				// Shubs, this is for the "Just the Two of Us" achievement lol
-				//									- Shadow Mario
-
-				// LOOOOOL
-				// 									- ava
-				keysPressed[buttonCode] = true;
-
-				// more accurate hit time for the ratings? part 2 (Now that the calculations are done, go back to the time it was before for not causing a note stutter)
-				Conductor.songPosition = lastTime;
-			}
-
-			for (field in playFields.members)
-			{
-				if (field.inControl && !field.autoPlayed && field.playerControls)
-				{
-					var spr:StrumNote = field.members[buttonCode];
-					if (spr != null && spr.animation.curAnim.name != 'confirm')
-					{
-						spr.playAnim('pressed');
-						spr.resetAnim = 0;
-					}
-				}
-			}
-			callOnLuas('onKeyPress', [buttonCode]);
-			callOnLuas('onButtonPress', [buttonCode]);
-		}
-	}
-
-	private function onButtonRelease(button:TouchButton):Void
-	{
-		if (button.IDs.filter(id -> id.toString().startsWith("EXTRA")).length > 0)
-			return;
-
-		var buttonCode:Int = (button.IDs[0].toString().startsWith('NOTE')) ? button.IDs[0] : button.IDs[1];
-
-		if (startedCountdown && !paused && buttonCode > -1)
-		{
-			for (field in playFields.members)
-			{
-				if (field.inControl && !field.autoPlayed && field.playerControls)
-				{
-					var spr:StrumNote = field.members[buttonCode];
-					if (spr != null)
-					{
-						spr.playAnim('static');
-						spr.resetAnim = 0;
-					}
-				}
-			}
-			callOnLuas('onKeyRelease', [buttonCode]);
-			callOnLuas('onButtonRelease', [buttonCode]);
-		}
 	}
 
 	// Hold notes

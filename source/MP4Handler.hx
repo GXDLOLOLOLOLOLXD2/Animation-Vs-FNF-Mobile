@@ -2,69 +2,51 @@ package;
 
 #if VIDEOS_ALLOWED
 import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.util.FlxTimer;
-import openfl.display.Sprite;
-import video.VideoSprite;
+import hxcodec.VideoHandler;
 import lime.app.Application;
 
 /*
  * Video Handler Working using hxCodec
  * by @azeitona-x7(youtube channel)
 */
-
 class MP4Handler {
+	public var video:VideoHandler;
 	public var finishCallback:Void->Void;
-	public var sprite:VideoSprite;
 
 	public function new() {}
 
-	// play just 1 time in the song and ends
-	public function playMP4(file:String, ?outputTo:FlxSprite = null):Void
-	{
-		var path = Paths.video(file); // ex: 'animatedbg' -> assets/videos/animatedbg.mp4
-		sprite = new VideoSprite();
-		sprite.load(path);
+	// Toca um vídeo uma vez (cutscene ou intro)
+	public function playMP4(file:String):Void {
+		var path = Paths.video(file); // Ex: 'intro' => assets/videos/intro.mp4
 
-		sprite.onComplete = function() {
+		video = new VideoHandler();
+		video.play(path, false);
+
+		video.finishCallback = function() {
 			trace("Vídeo finalizado: " + file);
-			if (finishCallback != null) {
+			if (finishCallback != null)
 				new FlxTimer().start(0.1, function(_) finishCallback());
-			}
-			// removed when the song finish
-			if (sprite.parent != null) sprite.parent.removeChild(sprite);
 		};
 
-		sprite.play();
-
-		// add the stage on top of everything
-		Application.current.window.stage.addChild(sprite);
-
-		// if wants appear inside a FlxSprite (like background)
-		if (outputTo != null) {
-			outputTo.loadGraphic(sprite.bitmapData);
-			sprite.visible = false;
-		}
+		Application.current.window.stage.addChild(video);
 	}
 
-	// plays in loop
-	public function playBackground(file:String):Void
-	{
+	// Toca em loop como background
+	public function playBackground(file:String):Void {
 		var path = Paths.video(file);
-		sprite = new VideoSprite();
-		sprite.load(path);
-		sprite.loop = true;
-		sprite.play();
 
-		Application.current.window.stage.addChildAt(sprite, 0);
+		video = new VideoHandler();
+		video.play(path, true); // true = loop
+
+		Application.current.window.stage.addChildAt(video, 0);
 	}
 
-	public function stop():Void
-	{
-		if (sprite != null) {
-			sprite.stop();
-			if (sprite.parent != null) sprite.parent.removeChild(sprite);
-			sprite = null;
+	public function stop():Void {
+		if (video != null) {
+			video.stop();
+			if (video.parent != null) video.parent.removeChild(video);
+			video = null;
 		}
 	}
 }
