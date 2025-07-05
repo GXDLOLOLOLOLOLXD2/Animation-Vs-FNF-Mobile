@@ -4,7 +4,6 @@ package;
 import flixel.FlxG;
 import flixel.util.FlxTimer;
 import hxcodec.flixel.FlxVideoSprite;
-import lime.app.Application;
 
 /*
  * Video Handler Working using hxCodec
@@ -16,36 +15,43 @@ class MP4Handler {
 
 	public function new() {}
 
-	// Toca um vídeo uma vez (cutscene ou intro)
 	public function playMP4(file:String):Void {
-		var path = Paths.video(file); // Ex: 'intro' => assets/videos/intro.mp4
+		var path = Paths.video(file);
 
 		video = new FlxVideoSprite();
 		video.play(path, false);
 
-		video.finishCallback = function() {
-			trace("Video Finished!: " + file);
-			if (finishCallback != null)
-				new FlxTimer().start(0.1, function(_) finishCallback());
-		};
+		// Adiciona o vídeo ao grupo atual do Flixel
+		FlxG.state.add(video);
 
-		Application.current.window.stage.addChild(video);
+		// Timer para checar se terminou
+		FlxG.camera.flash(0xFF000000, 0.1); // só para ter um feedback visual (opcional)
+		new FlxTimer().start(0.1, function checkFinished(_) {
+			if (!video.playing) {
+				trace("Video Finished!: " + file);
+				if (finishCallback != null)
+					finishCallback();
+			} else {
+				// Continua checando
+				checkFinished(_);
+			}
+		});
 	}
 
-	// Toca em loop como background
 	public function playBackground(file:String):Void {
 		var path = Paths.video(file);
 
 		video = new FlxVideoSprite();
-		video.play(path, true); // true = loop
+		video.play(path, true);
 
-		Application.current.window.stage.addChildAt(video, 0);
+		FlxG.state.add(video); // Adiciona ao fundo
 	}
 
 	public function stop():Void {
 		if (video != null) {
 			video.stop();
-			if (video.parent != null) video.parent.removeChild(video);
+			video.kill();
+			video.destroy();
 			video = null;
 		}
 	}
