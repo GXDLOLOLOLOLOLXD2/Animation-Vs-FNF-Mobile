@@ -11,73 +11,57 @@ import openfl.events.Event;
 
 import mobile.backend.MobileData;
 
-class Main extends Sprite
-{
-	public static final game = { // Copy of Psych Engine lastest version
-		width: 1280, // WINDOW width
-		height: 720, // WINDOW height
-		initialState: TitleState, // initial game state
-		framerate: 60, // default framerate
-		skipSplash: true, // if the default flixel splash screen should be skipped
-		startFullscreen: false // if the game should start at fullscreen mode
+class Main extends Sprite {
+	public static final game = {
+		width: 1280,
+		height: 720,
+		initialState: TitleState,
+		framerate: 60,
+		skipSplash: true,
+		startFullscreen: false
 	};
 
-	var gameWidth:Int = 1280; // Width of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var gameHeight:Int = 720; // Height of the game in pixels (might be less / more in actual pixels depending on your zoom).
-	var initialState:Class<FlxState> = TitleState; // The FlxState the game starts with.
-	var zoom:Float = -1; // If -1, zoom is automatically calculated to fit the window dimensions.
-	var framerate:Int = 60; // How many frames per second the game should run at.
-	var skipSplash:Bool = true; // Whether to skip the flixel splash screen that appears in release mode.
-	var startFullscreen:Bool = false; // Whether to start the game in fullscreen on desktop targets
+	var gameWidth:Int = 1280;
+	var gameHeight:Int = 720;
+	var initialState:Class<FlxState> = TitleState;
+	var zoom:Float = -1;
+	var framerate:Int = 60;
+	var skipSplash:Bool = true;
+	var startFullscreen:Bool = false;
 	public static var fpsVar:FPS;
 
-	// You can pretty much ignore everything from here on - your code should go in your states.
-
-	public static function main():Void
-	{
+	public static function main():Void {
 		Lib.current.addChild(new Main());
 	}
 
-	public function new()
-	{
+	public function new() {
 		super();
-
-		// addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
 
 		MobileData.init();
 
 		if (stage != null)
-		{
 			init();
-		}
 		else
-		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
-		}
 	}
 
-	private function init(?E:Event):Void
-	{
+	private function init(?E:Event):Void {
 		if (hasEventListener(Event.ADDED_TO_STAGE))
-		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
 
 		setupGame();
 	}
 
-	private function setupGame():Void
-	{
+	private function setupGame():Void {
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
-		if (zoom == -1)
-		{
+		if (zoom == -1) {
 			var ratioX:Float = stageWidth / gameWidth;
 			var ratioY:Float = stageHeight / gameHeight;
 			zoom = Math.min(ratioX, ratioY);
-			gameWidth = Math.ceil(stageWidth / zoom);
-			gameHeight = Math.ceil(stageHeight / zoom);
+			gameWidth = Std.int(Math.ceil(stageWidth / zoom));
+			gameHeight = Std.int(Math.ceil(stageHeight / zoom));
 		}
 
 		#if !debug
@@ -85,19 +69,21 @@ class Main extends Sprite
 		#end
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, skipSplash, startFullscreen));
+
+		// Corrigido: zoom não é argumento aqui!
+		addChild(new FlxGame(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
-		if(fpsVar != null) {
+
+		if (fpsVar != null)
 			fpsVar.visible = ClientPrefs.showFPS;
-		}
 
 		#if mobile
 		lime.system.System.allowScreenTimeout = ClientPrefs.screensaver;
-		#if android
-		FlxG.android.preventDefaultKeys = [BACK]; 
-		#end
+			#if android
+			FlxG.android.preventDefaultKeys = [BACK];
+			#end
 		#end
 
 		#if html5
