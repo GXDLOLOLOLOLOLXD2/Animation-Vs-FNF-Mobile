@@ -19,11 +19,12 @@ class MP4Handler {
 		var path = Paths.video(file);
 
 		video = new FlxVideoSprite();
-		video.play(path, false, function() {
+		video.play(path, false);
+		video.onComplete = function() {
 			trace("Video Finished!: " + file);
 			if (finishCallback != null)
 				finishCallback();
-		});
+		};
 
 		FlxG.state.add(video);
 	}
