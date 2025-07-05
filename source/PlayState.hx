@@ -1115,17 +1115,17 @@ class PlayState extends MusicBeatState
 
 		// startCountdown();
 
-		#if !android
+		#if mobile
 		addTouchPad("NONE", "A"); // A button replace space button
 		addTouchPadCamera();
 		touchPad.visible = true;
 		#end
 		addMobileControls();
-		if(!ClientPrefs.controllerMode)
+		/*if(!ClientPrefs.controllerMode)
 		{
 			mobileControls.onButtonDown.add(onButtonPress);
 			mobileControls.onButtonUp.add(onButtonRelease);
-		}
+		}*/
 
 		generateSong(SONG.song);
 		#if LUA_ALLOWED
@@ -2440,7 +2440,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.mouse.visible = false;
 
-		if(FlxG.keys.justPressed.SPACE || touchPad.buttonA.justPressed && attacking && canDodge) // Space Button... Test
+		if(FlxG.keys.justPressed.SPACE #if TOUCH_CONTROLS || (touchPad != null && touchPad.buttonA.justPressed) #end && attacking && canDodge) // Space Button... Test
 		{
 			dodged = true; 
 			canDodge = false;
@@ -2448,6 +2448,13 @@ class PlayState extends MusicBeatState
 				canDodge = true;
 			});
 		}
+
+		/*#if TOUCH_CONTROLS
+		if (touchPad != null && touchPad.buttonA.justPressed)
+		{
+			playerDodge();
+		}
+		#end*/
 
 		callOnLuas('onUpdate', [elapsed]);
 

@@ -42,9 +42,9 @@ class Main extends Sprite
 	{
 		super();
 
-		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
+		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen)); // Copy of Psych Engine lastest version
 
-		// MobileData.init();
+		MobileData.init();
 
 		if (stage != null)
 		{
@@ -85,15 +85,16 @@ class Main extends Sprite
 		#end
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame({
-			width: gameWidth,
-			height: gameHeight,
-			initialState: initialState,
-			zoom: zoom,
-			framerate: framerate,
-			skipSplash: skipSplash,
-			startFullscreen: startFullscreen
-		}));
+		addChild(new FlxGame(
+			gameWidth,
+			gameHeight,
+			initialState,
+			zoom,
+			framerate,
+			framerate,
+			skipSplash,
+			startFullscreen
+		));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
