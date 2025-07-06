@@ -83,8 +83,9 @@ jobs:
           haxelib set flixel-addons 3.1.1
           haxelib set flixel-ui 2.6.1
 
-      - name: Ajustar flags do hxcpp
-        run: echo HXCPP_CONFIG=-DHXCPP_NO_AUTO_PCH >> $GITHUB_ENV
+      - name: Desativar PCH corretamente
+        run: |
+          echo "-DHXCPP_NO_AUTO_PCH" > ~/.hxcpp_config.xml
 
       - name: Build APK
         run: |
