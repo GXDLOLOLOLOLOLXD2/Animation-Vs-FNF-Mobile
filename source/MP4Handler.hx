@@ -6,7 +6,7 @@ import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.events.Event;
-import vlc.bitmap.VLCBitmap as VlcBitmap;
+import vlc.VlcBitmap;
 
 /*
  * MP4Handler adapted for mobile (Android/iOS)
