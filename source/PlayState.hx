@@ -79,6 +79,8 @@ class PlayState extends MusicBeatState
 {
     public static var animatedbgdisable:Bool;
 
+	var mp4Handler:MP4Handler;
+
 	var creditsBG:FlxSprite;
 
 	var creditsText:FlxText;
@@ -817,8 +819,8 @@ class PlayState extends MusicBeatState
 			case 'animatedbg':
 
 				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
-				var mp4:MP4Handler = new MP4Handler();
-				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop
+				mp4Handler = new MP4Handler();
+				mp4Handler.playMP4("assets/videos/animatedbg.mp4", true); // loop true
 				#end
 
 				/*var videos = [];
@@ -1735,21 +1737,11 @@ class PlayState extends MusicBeatState
 		var foundFile:Bool = false;
 		var fileName:String = #if MODS_ALLOWED Paths.modFolders('videos/' + name + '.' + Paths.VIDEO_EXT); #else ''; #end
 		#if sys
-		if(Util.exists(fileName))
+		if(Util.existsLOL(fileName))
 		{
 			foundFile = true;
 		}
 		#end
-
-		// Cutscene use
-		/*#if VIDEOS_ALLOWED
-    		#if windows
-        		VideoHandler.playVideo("yourcutscene.webm");
-    		#elseif android
-        		// especific use of hxvlc
-        		AndroidVideo.play("yourcutscene.mp4");
-    		#end
-		#end*/
 
 		if(!foundFile)
 		{
@@ -2639,7 +2631,7 @@ class PlayState extends MusicBeatState
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180);
 		}
 
-		if (controls.PAUSE || #if android FlxG.android.justReleased.BACK #end && startedCountdown && canPause) // touchPad.buttonP.justPressed
+		if ((controls.PAUSE || #if android FlxG.android.justReleased.BACK #end) && startedCountdown && canPause) // touchPad.buttonP.justPressed
 		{
 			var ret:Dynamic = callOnLuas('onPause', []);
 			if(ret != FunkinLua.Function_Stop) {

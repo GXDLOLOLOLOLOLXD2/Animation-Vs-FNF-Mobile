@@ -6,7 +6,7 @@ import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.events.Event;
-import vlc.VLCBitmap;
+import vlc.VlcBitmap;
 
 /*
  * MP4Handler adapted for mobile (Android/iOS)
@@ -17,7 +17,7 @@ class MP4Handler {
 	public var finishCallback:Void->Void;
 	public var stateCallback:FlxState;
 
-	public var bitmap:VLCBitmap;
+	public var bitmap:VlcBitmap;
 	public var sprite:FlxSprite;
 
 	public function new() {}
@@ -26,9 +26,10 @@ class MP4Handler {
 		if (!midSong && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-		bitmap = new VLCBitmap();
+		bitmap = new VlcBitmap();
+		bitmap.bitmap.smoothing = true;
 
-		// Define tamanho proporcional
+		// Defining proportional size
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16) {
 			bitmap.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
 			bitmap.height = Std.int(FlxG.stage.stageHeight);
@@ -37,20 +38,18 @@ class MP4Handler {
 			bitmap.height = Std.int(FlxG.stage.stageWidth / (16 / 9));
 		}
 
-		// Callbacks VLC
-		bitmap.onVideoReady = onVLCVideoReady;
-		bitmap.onComplete = onVLCComplete;
-		bitmap.onError = onVLCError;
+		FlxG.stage.addChildAt(bitmap, 0); // ensures that it stays at the bottom
 
 		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
-
-		bitmap.repeat = repeat ? -1 : 0;
-		bitmap.inWindow = isWindow;
-		bitmap.fullscreen = isFullscreen;
-
-		FlxG.addChildBelowMouse(bitmap);
 		bitmap.play(checkFile(path));
 
+		// Loop manually, because repeat does not exist.
+		bitmap.addEventListener(Event.SOUND_COMPLETE, function(_) {
+			if (repeat)
+				bitmap.play(checkFile(path));
+		});
+
+		// If you want to load in sprite
 		if (outputTo != null) {
 			bitmap.alpha = 0;
 			sprite = outputTo;
@@ -73,53 +72,24 @@ class MP4Handler {
 		#end
 	}
 
-	function onVLCVideoReady() {
-		trace("video loaded!");
-
-		if (sprite != null)
-			sprite.loadGraphic(bitmap.bitmapData);
-	}
-
-	public function onVLCComplete() {
-		FlxG.camera.fade(FlxColor.BLACK, 0, false);
-		trace("Big, Big Chungus, Big Chungus!");
-
-		new FlxTimer().start(0, function(tmr:FlxTimer) {
-			if (finishCallback != null)
-				finishCallback();
-			else if (stateCallback != null)
-				LoadingState.loadAndSwitchState(stateCallback);
-		});
-	}
-
 	public function kill() {
 		if (bitmap != null) {
-			#if flash
-			FlxG.stage.removeChild(bitmap);
-			#else
 			if (FlxG.stage.contains(bitmap))
 				FlxG.stage.removeChild(bitmap);
-			#end
 
 			FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
 			bitmap.stop();
 			bitmap.dispose();
 			bitmap = null;
 		}
-
 		sprite = null;
 	}
 
-	function onVLCError() {
-		if (finishCallback != null)
-			finishCallback();
-		else if (stateCallback != null)
-			LoadingState.loadAndSwitchState(stateCallback);
-	}
-
 	function update(e:Event) {
-		bitmap.volume = FlxG.sound.volume + 0.3;
-		if (FlxG.sound.volume <= 0.1)
-			bitmap.volume = 0;
+		if (bitmap != null) {
+			bitmap.volume = FlxG.sound.volume + 0.3;
+			if (FlxG.sound.volume <= 0.1)
+				bitmap.volume = 0;
+		}
 	}
 }
