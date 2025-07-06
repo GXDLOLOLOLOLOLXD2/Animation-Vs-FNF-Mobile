@@ -822,7 +822,7 @@ class PlayState extends MusicBeatState
 
 				#if VIDEOS_ALLOWED
 				var mp4:MP4Handler = new MP4Handler();
-				mp4.playMP4("assets/videos/animatedbg.mp4");
+				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop
 				#end
 
 				/*var videos = [];
