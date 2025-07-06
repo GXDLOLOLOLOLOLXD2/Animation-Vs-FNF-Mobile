@@ -2,7 +2,7 @@ name: Android Build
 
 on:
   push:
-    branches: ['mobile']
+    branches: ['mobile-2']
   workflow_dispatch:
 
 jobs:
