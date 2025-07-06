@@ -3,9 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.util.FlxTimer;
-import hxcodec.flixel.FlxVideoSprite;
 import openfl.events.Event;
+import hxcodec.VideoSprite;
 
 /*
  * MP4Handler for Android using hxCodec
@@ -13,7 +12,7 @@ import openfl.events.Event;
  * by azeitona-x7 (adapted for hxCodec)
  */
 class MP4Handler {
-	public var video:FlxVideoSprite;
+	public var video:VideoSprite;
 	public var sprite:FlxSprite;
 	public var finishCallback:Void->Void;
 	public var stateCallback:FlxState;
@@ -24,10 +23,8 @@ class MP4Handler {
 		if (!midSong && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-		video = new FlxVideoSprite();
-		video.play(path);
-
-		video.bitmap.smoothing = true;
+		video = new VideoSprite();
+		video.smoothing = true;
 
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16) {
 			video.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
@@ -45,12 +42,14 @@ class MP4Handler {
 			sprite = outputTo;
 		}
 
-		video.onComplete = function() {
+		video.play(path);
+
+		video.addEventListener(Event.SOUND_COMPLETE, function(_) {
 			if (repeat)
 				video.play(path);
 			else if (finishCallback != null)
 				finishCallback();
-		};
+		});
 	}
 
 	public function kill() {
@@ -60,7 +59,7 @@ class MP4Handler {
 
 			FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
 			video.stop();
-			video.dispose();
+			video.dispose(); // ← now works
 			video = null;
 		}
 		sprite = null;

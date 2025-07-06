@@ -317,7 +317,11 @@ class PlayState extends MusicBeatState
 	var chromIsSoAngyRnSaveMeLol:Float = 0;
 
 	var vignette:FlxSprite;
-	
+
+	#if VIDEOS_ALLOWED
+	var mp4Background:MP4Handler;
+	#end
+
 	var reanimatedbfOn:Bool = ClientPrefs.reanimatedbf;
 	override public function create()
 	{
@@ -821,8 +825,8 @@ class PlayState extends MusicBeatState
 			case 'animatedbg':
 
 				#if VIDEOS_ALLOWED
-				var mp4:MP4Handler = new MP4Handler();
-				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop
+				mp4Background = new MP4Handler();
+				mp4Background.playMP4("assets/videos/animatedbg.mp4", true);
 				#end
 
 				/*var videos = [];
