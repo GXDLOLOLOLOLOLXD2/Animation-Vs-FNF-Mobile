@@ -65,9 +65,11 @@ jobs:
           # compatibilty libraries
           haxelib git extension-webview https://github.com/Daninnocent/extension-webview.git --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git --quiet
-          haxelib install hxcodec
           # end of adictions libraries
           haxelib list
+      - name: Installing a Old hxCodec with VideoSprite
+        run: |
+          haxelib git hxcodec https://github.com/polybiusproxy/hxCodec.git f8e30a3c81501a3fe83c2e130f8ed4e8941c0a42
 
       - name: Setup Lime
         run: |
