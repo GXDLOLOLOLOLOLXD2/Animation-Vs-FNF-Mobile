@@ -89,7 +89,7 @@ jobs:
       - name: Build APK
         run: |
          export HXCPP_CONFIG=" -DHXCPP_NO_AUTO_PCH"
-         haxelib run openfl build android --app-version="${{ github.run_id }}" -final
+         haxelib run openfl build android -final -DHXCPP_NO_AUTO_PCH --app-version="${{ github.run_id }}"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
