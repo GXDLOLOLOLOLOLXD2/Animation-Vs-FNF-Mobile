@@ -6,11 +6,6 @@ import flixel.FlxState;
 import openfl.events.Event;
 import hxcodec.VideoSprite;
 
-/*
- * MP4Handler for Android using hxCodec
- * Loopable video background handler
- * by azeitona-x7 (adapted for hxCodec)
- */
 class MP4Handler {
 	public var video:VideoSprite;
 	public var sprite:FlxSprite;
@@ -24,7 +19,6 @@ class MP4Handler {
 			FlxG.sound.music.stop();
 
 		video = new VideoSprite();
-		video.smoothing = true;
 
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16) {
 			video.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
@@ -59,17 +53,13 @@ class MP4Handler {
 
 			FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
 			video.stop();
-			video.dispose(); // ← now works
+			video.dispose();
 			video = null;
 		}
 		sprite = null;
 	}
 
 	function update(e:Event) {
-		if (video != null) {
-			video.volume = FlxG.sound.volume + 0.3;
-			if (FlxG.sound.volume <= 0.1)
-				video.volume = 0;
-		}
+		// Nothing for now
 	}
 }
