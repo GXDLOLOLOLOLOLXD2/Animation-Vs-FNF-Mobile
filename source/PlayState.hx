@@ -824,8 +824,8 @@ class PlayState extends MusicBeatState
 				add(bg);
 			case 'animatedbg':
 		                #if VIDEOS_ALLOWED
-				mp4Background = new MP4Handler();
-				mp4Background.playMP4("assets/videos/animatedbg.mp4", true);
+				mp4 = new MP4Handler();
+				mp4.playMP4("assets/videos/animatedbg.mp4", true);
                                 #end
 
 
