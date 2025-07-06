@@ -816,6 +816,11 @@ class PlayState extends MusicBeatState
 				add(bg);
 			case 'animatedbg':
 
+				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
+				var mp4:MP4Handler = new MP4Handler();
+				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop
+				#end
+
 				/*var videos = [];
 				trace("caching images...");
 	
@@ -832,41 +837,39 @@ class PlayState extends MusicBeatState
 					trace("this is " + replaced);
 				}*/
 
-				animatedbg = new BGSprite('animatedbg', 620, 330, 0, 0);
-				animatedbg.scale.set(2.7, 2.7);
-				//animatedbg.screenCenter();
-				animatedbg.y -= 350;
-				animatedbg.x -= 600;
-				add(animatedbg);
-				remove(animatedbg);
-				
-				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
-				var handler = new MP4Handler();
-				handler.finishCallback = function() {
-					handler.kill();
-					handler.playMP4("animatedbg.mp4", true);
-				};
-				handler.playMP4("animatedbg.mp4", true);
-				#end
+				if (ClientPrefs.lowQuality || animatedbgdisable)
+				{
+					animatedbg = new BGSprite('animatedbg', 620, 330, 0, 0);
+					animatedbg.scale.set(2.7, 2.7);
+					animatedbg.screenCenter();
+					/*animatedbg.y -= 350;
+					animatedbg.x -= 600;*/
+					add(animatedbg);
+				}
+				else {
+					// Don't need the BGSprite because the video is already the background.
+				}
 
-				if (animatedbgdisable == true)
+				//remove(animatedbg);
+
+				/*if (animatedbgdisable == true)
 				{
 					animatedbg = new BGSprite('animatedbg', -500, -500, 0, 0);
 					animatedbg.scale.set(1.5, 1.5);
 					animatedbg.screenCenter();
 					add(animatedbg);
 					remove(animatedbg);
-				}
+				}*/
 
-				if(ClientPrefs.lowQuality) {
+				/*if(ClientPrefs.lowQuality) {
 					animatedbg = new BGSprite('animatedbg', -500, -500, 0, 0);
 					animatedbg.scale.set(1.5, 1.5);
 					animatedbg.screenCenter();
 					add(animatedbg);
 					remove(animatedbg);
-				}
+				}*/
 				
-				add(animatedbg);
+				//add(animatedbg);
 
 				if(!ClientPrefs.lowQuality) {
 					backdudes = new FlxSprite(-400, 400);
@@ -876,9 +879,9 @@ class PlayState extends MusicBeatState
 					backdudes.scrollFactor.set(0.9, 0.9);
 					backdudes.updateHitbox();
 					add(backdudes);
-				} else if(ClientPrefs.lowQuality) {
+				}/* else if(ClientPrefs.lowQuality) {
 					remove(backdudes);
-				}
+				}*/
 		}
 
 		if(isPixelStage) {
