@@ -6,12 +6,12 @@ import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.events.Event;
-import vlc.VlcBitmap;
+import vlc.bitmap.VLCBitmap as VlcBitmap;
 
 /*
  * MP4Handler adapted for mobile (Android/iOS)
- * Compatible with the original structure of Animation Vs FNF
- * by azeitona-x7 and originals creators
+ * Compatible with the official hxCodec from haxelib
+ * by azeitona-x7
 */
 class MP4Handler {
 	public var finishCallback:Void->Void;
@@ -29,7 +29,7 @@ class MP4Handler {
 		bitmap = new VlcBitmap();
 		bitmap.bitmap.smoothing = true;
 
-		// Defining proportional size
+		// Proporção 16:9
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16) {
 			bitmap.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
 			bitmap.height = Std.int(FlxG.stage.stageHeight);
@@ -38,18 +38,16 @@ class MP4Handler {
 			bitmap.height = Std.int(FlxG.stage.stageWidth / (16 / 9));
 		}
 
-		FlxG.stage.addChildAt(bitmap, 0); // ensures that it stays at the bottom
+		FlxG.stage.addChildAt(bitmap, 0);
 
 		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
 		bitmap.play(checkFile(path));
 
-		// Loop manually, because repeat does not exist.
 		bitmap.addEventListener(Event.SOUND_COMPLETE, function(_) {
 			if (repeat)
 				bitmap.play(checkFile(path));
 		});
 
-		// If you want to load in sprite
 		if (outputTo != null) {
 			bitmap.alpha = 0;
 			sprite = outputTo;
