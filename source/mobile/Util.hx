@@ -209,7 +209,7 @@ class Util // MultipleUtil
         //#if mobile
         // are impossible create a directory internally because neededs be embed in the project
         //#else
-		if (!Utils.existsLOL(path)) {
+		if (!Util.existsLOL(path)) {
 			FileSystem.createDirectory(path);
 		}
         //#end

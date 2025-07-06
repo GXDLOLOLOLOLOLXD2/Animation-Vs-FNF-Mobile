@@ -6,7 +6,7 @@ import flixel.FlxState;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import openfl.events.Event;
-import vlc.VlcBitmap;
+import vlc.VLCBitmap;
 
 /*
  * Original MP4Handler modified for mobile(android & ios)
@@ -17,7 +17,7 @@ class MP4Handler
 	public var finishCallback:Void->Void;
 	public var stateCallback:FlxState;
 
-	public var bitmap:VlcBitmap;
+	public var bitmap:VLCBitmap;
 	public var sprite:FlxSprite;
 
 	public function new()
