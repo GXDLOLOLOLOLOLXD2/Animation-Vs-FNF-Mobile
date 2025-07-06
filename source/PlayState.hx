@@ -69,6 +69,8 @@ import mobile.objects.TouchPad;
 import mobile.input.MobileInputID;
 import mobile.Util;
 
+import MP4Handler;
+
 #if sys
 import sys.FileSystem;
 #end
@@ -820,7 +822,7 @@ class PlayState extends MusicBeatState
 
 				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
 				mp4Handler = new MP4Handler();
-				mp4Handler.playMP4("assets/videos/animatedbg.mp4", true); // loop true
+				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop true
 				#end
 
 				/*var videos = [];
@@ -4799,6 +4801,9 @@ class PlayState extends MusicBeatState
 	private var preventLuaRemove:Bool = false;
 	override function destroy()
 	{
+		if (mp4 != null)
+            mp4.kill();
+
 		preventLuaRemove = true;
 		for (i in 0...luaArray.length) {
 			luaArray[i].call('onDestroy', []);

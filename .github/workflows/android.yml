@@ -65,7 +65,6 @@ jobs:
           # compatibilty libraries
           haxelib git extension-webview https://github.com/Daninnocent/extension-webview.git --quiet
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc.git --quiet
-          haxelib git hxCodec https://github.com/SPLCoding/hxCodec-but-it-works-xd.git
           # end of adictions libraries
           haxelib list
 

@@ -111,14 +111,11 @@
 	<haxelib name="flixel" />
 	<haxedev set='webgl' />
 
-	<!--In case you want to use the addons package-->
-	<haxelib name="flixel-addons" />
 	<haxelib name="hscript" />
 
 	<haxelib name="actuate" />
     <haxelib name="extension-webm" if="desktop" />
 
-	<!--In case you want to use the ui package-->
 	<haxelib name="flixel-ui" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="faxe" if='switch'/>
@@ -133,7 +130,7 @@
 	<haxelib name="lime" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-tools" />
-	<haxelib name="hxCodec" />
+	<!-- <haxelib name="hxCodec" /> -->
 
 	<haxelib name="extension-androidtools" if="mobile" />
 
