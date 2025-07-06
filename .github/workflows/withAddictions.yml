@@ -70,10 +70,6 @@ jobs:
          unzip libs/hxcodec-legacy-videosprite.zip -d hxcodec
          haxelib dev hxcodec hxcodec
 
-      - name: Ajustar flags do hxcpp
-        run: |
-         echo "HXCPP_CONFIG=\"-DHXCPP_NO_AUTO_PCH\"" >> $GITHUB_ENV
-
       - name: Setup Lime
         run: |
           haxelib run lime setup -alias -y
@@ -86,6 +82,10 @@ jobs:
           haxelib set flixel 5.6.1
           haxelib set flixel-addons 3.1.1
           haxelib set flixel-ui 2.6.1
+
+      - name: Ajustar flags do hxcpp
+        run: |
+         echo "HXCPP_CONFIG=\"-DHXCPP_NO_AUTO_PCH\"" >> $GITHUB_ENV
 
       - name: Build APK
         run: |
