@@ -3,91 +3,74 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import hxcodec.flixel.FlxVideoSprite;
 import openfl.events.Event;
-import vlc.VlcBitmap;
 
 /*
- * MP4Handler adapted for mobile (Android/iOS)
- * Compatible with the official hxCodec from haxelib
- * by azeitona-x7
-*/
+ * MP4Handler for Android using hxCodec
+ * Loopable video background handler
+ * by azeitona-x7 (adapted for hxCodec)
+ */
 class MP4Handler {
+	public var video:FlxVideoSprite;
+	public var sprite:FlxSprite;
 	public var finishCallback:Void->Void;
 	public var stateCallback:FlxState;
 
-	public var bitmap:VlcBitmap;
-	public var sprite:FlxSprite;
-
 	public function new() {}
 
-	public function playMP4(path:String, ?repeat:Bool = true, ?outputTo:FlxSprite = null, ?isWindow:Bool = false, ?isFullscreen:Bool = false, ?midSong:Bool = false):Void {
+	public function playMP4(path:String, ?repeat:Bool = true, ?outputTo:FlxSprite = null, ?midSong:Bool = false):Void {
 		if (!midSong && FlxG.sound.music != null)
 			FlxG.sound.music.stop();
 
-		bitmap = new VlcBitmap();
-		bitmap.bitmap.smoothing = true;
+		video = new FlxVideoSprite();
+		video.play(path);
 
-		// Proporção 16:9
+		video.bitmap.smoothing = true;
+
 		if (FlxG.stage.stageHeight / 9 < FlxG.stage.stageWidth / 16) {
-			bitmap.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
-			bitmap.height = Std.int(FlxG.stage.stageHeight);
+			video.width = Std.int(FlxG.stage.stageHeight * (16 / 9));
+			video.height = Std.int(FlxG.stage.stageHeight);
 		} else {
-			bitmap.width = Std.int(FlxG.stage.stageWidth);
-			bitmap.height = Std.int(FlxG.stage.stageWidth / (16 / 9));
+			video.width = Std.int(FlxG.stage.stageWidth);
+			video.height = Std.int(FlxG.stage.stageWidth / (16 / 9));
 		}
 
-		FlxG.stage.addChildAt(bitmap, 0);
-
+		FlxG.stage.addChildAt(video, 0);
 		FlxG.stage.addEventListener(Event.ENTER_FRAME, update);
-		bitmap.play(checkFile(path));
-
-		bitmap.addEventListener(Event.SOUND_COMPLETE, function(_) {
-			if (repeat)
-				bitmap.play(checkFile(path));
-		});
 
 		if (outputTo != null) {
-			bitmap.alpha = 0;
+			video.alpha = 0;
 			sprite = outputTo;
 		}
-	}
 
-	function checkFile(fileName:String):String {
-		#if mobile
-		return fileName;
-		#else
-		var pDir = "";
-		var appDir = "file:///" + Sys.getCwd() + "/";
-
-		if (fileName.indexOf(":") == -1)
-			pDir = appDir;
-		else if (fileName.indexOf("file://") == -1 && fileName.indexOf("http") == -1)
-			pDir = "file:///";
-
-		return pDir + fileName;
-		#end
+		video.onComplete = function() {
+			if (repeat)
+				video.play(path);
+			else if (finishCallback != null)
+				finishCallback();
+		};
 	}
 
 	public function kill() {
-		if (bitmap != null) {
-			if (FlxG.stage.contains(bitmap))
-				FlxG.stage.removeChild(bitmap);
+		if (video != null) {
+			if (FlxG.stage.contains(video))
+				FlxG.stage.removeChild(video);
 
 			FlxG.stage.removeEventListener(Event.ENTER_FRAME, update);
-			bitmap.stop();
-			bitmap.dispose();
-			bitmap = null;
+			video.stop();
+			video.dispose();
+			video = null;
 		}
 		sprite = null;
 	}
 
 	function update(e:Event) {
-		if (bitmap != null) {
-			bitmap.volume = FlxG.sound.volume + 0.3;
+		if (video != null) {
+			video.volume = FlxG.sound.volume + 0.3;
 			if (FlxG.sound.volume <= 0.1)
-				bitmap.volume = 0;
+				video.volume = 0;
 		}
 	}
 }
