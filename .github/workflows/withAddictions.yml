@@ -65,11 +65,10 @@ jobs:
 
           haxelib list
 
-      - name: Baixar hxcodec com VideoSprite
+      - name: Instalar hxcodec com VideoSprite (offline)
         run: |
-          curl -L -o hxcodec.zip https://chat.openai.com/mnt/data/hxcodec-legacy-videosprite.zip
-          unzip hxcodec.zip -d hxcodec
-          haxelib dev hxcodec hxcodec
+         unzip libs/hxcodec-legacy-videosprite.zip -d hxcodec
+         haxelib dev hxcodec hxcodec
 
       - name: Setup Lime
         run: |
