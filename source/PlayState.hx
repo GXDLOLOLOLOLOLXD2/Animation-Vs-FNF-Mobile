@@ -69,9 +69,7 @@ import mobile.objects.TouchPad;
 import mobile.input.MobileInputID;
 import mobile.Util;
 
-#if VIDEOS_ALLOWED
 import MP4Handler;
-#end
 
 #if sys
 import sys.FileSystem;
@@ -318,9 +316,7 @@ class PlayState extends MusicBeatState
 
 	var vignette:FlxSprite;
 
-	#if VIDEOS_ALLOWED
 	var mp4Background:MP4Handler;
-	#end
 
 	var reanimatedbfOn:Bool = ClientPrefs.reanimatedbf;
 	override public function create()
@@ -824,10 +820,8 @@ class PlayState extends MusicBeatState
 				add(bg);
 			case 'animatedbg':
 
-				#if VIDEOS_ALLOWED
 				mp4Background = new MP4Handler();
 				mp4Background.playMP4("assets/videos/animatedbg.mp4", true);
-				#end
 
 				/*var videos = [];
 				trace("caching images...");
