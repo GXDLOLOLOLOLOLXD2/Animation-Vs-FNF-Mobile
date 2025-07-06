@@ -65,11 +65,12 @@ jobs:
 
           haxelib list
 
-      - name: Instalar hxcodec com VideoSprite (offline)
+      - name: Instalar hxCodec com VideoSprite (offline)
         run: |
           rm -rf hxcodec_temp
           unzip libs/hxcodec-legacy-videosprite.zip -d hxcodec_temp
           haxelib dev hxCodec hxcodec_temp
+          haxelib list
 
       - name: Verificar se hxCodec foi registrado
         run: haxelib list
