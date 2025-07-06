@@ -122,8 +122,8 @@ class CopyState extends MusicBeatState
 				if (failedFiles.length > 0)
 				{
 					CoolUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
-					if (!FileSystem.exists('logs'))
-						FileSystem.createDirectory('logs');
+					if (!mobile.Util.exists('logs'))
+						mobile.Util.createDirectory('logs');
 					File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
 				}
 				canUpdate = false;
@@ -145,11 +145,11 @@ class CopyState extends MusicBeatState
 	{
 		var file = locatedFiles[loopTimes];
 		loopTimes++;
-		if (!FileSystem.exists(file))
+		if (!mobile.Util.exists(file))
 		{
 			var directory = Path.directory(file);
-			if (!FileSystem.exists(directory))
-				FileSystem.createDirectory(directory);
+			if (!mobile.Util.exists(directory))
+				mobile.Util.createDirectory(directory);
 			try
 			{
 				if (OpenFLAssets.exists(getFile(file)))
@@ -182,8 +182,8 @@ class CopyState extends MusicBeatState
 			var fileData:String = OpenFLAssets.getText(getFile(file));
 			if (fileData == null)
 				fileData = '';
-			if (!FileSystem.exists(directory))
-				FileSystem.createDirectory(directory);
+			if (!mobile.Util.exists(directory))
+				mobile.Util.createDirectory(directory);
 			File.saveContent(Path.join([directory, fileName]), fileData);
 		}
 		catch (e:haxe.Exception)
@@ -227,7 +227,7 @@ class CopyState extends MusicBeatState
 		var assets = locatedFiles.filter(folder -> folder.startsWith('assets/'));
 		var mods = locatedFiles.filter(folder -> folder.startsWith('content/'));
 		locatedFiles = assets.concat(mods);
-		locatedFiles = locatedFiles.filter(file -> !FileSystem.exists(file));
+		locatedFiles = locatedFiles.filter(file -> !mobile.Util.exists(file));
 
 		var filesToRemove:Array<String> = [];
 

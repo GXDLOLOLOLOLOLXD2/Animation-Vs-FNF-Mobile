@@ -104,15 +104,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.json";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)) {
 			path = "mods/images/gfDanceTitle.json";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)) {
 			path = "assets/images/gfDanceTitle.json";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		titleJSON = Json.parse(Util.getContent(path));
 		#else
 		var path = Paths.getPreloadPath("images/gfDanceTitle.json");
@@ -268,15 +268,15 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/logoBumpin.png";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)){
 			path = "mods/images/logoBumpin.png";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)){
 			path = "assets/images/logoBumpin.png";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		logoBl.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),Util.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
@@ -295,14 +295,14 @@ class TitleState extends MusicBeatState
 		
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/gfDanceTitle.png";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)){
 			path = "mods/images/gfDanceTitle.png";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		}
 		if (!Util.exists(path)){
 			path = "assets/images/gfDanceTitle.png";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		}
 		gfDance.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),Util.getContent(StringTools.replace(path,".png",".xml")));
 		#else
@@ -319,15 +319,15 @@ class TitleState extends MusicBeatState
 		titleText = new FlxSprite(titleJSON.startx, titleJSON.starty);
 		#if (desktop && MODS_ALLOWED)
 		var path = "mods/" + Paths.currentModDirectory + "/images/titleEnter.png";
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)){
 			path = "mods/images/titleEnter.png";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		if (!Util.exists(path)){
 			path = "assets/images/titleEnter.png";
 		}
-		//trace(path, FileSystem.exists(path));
+		//trace(path, mobile.Util.exists(path));
 		titleText.frames = FlxAtlasFrames.fromSparrow(BitmapData.fromFile(path),Util.getContent(StringTools.replace(path,".png",".xml")));
 		#else
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');

@@ -84,7 +84,7 @@ class StorageUtil
 		try
 		{
 			if (!Util.exists('saves'))
-				FileSystem.createDirectory('saves');
+				mobile.Util.createDirectory('saves');
 
 			Util.saveContent('saves/$fileName', fileData);
 			if (alert)
@@ -121,8 +121,8 @@ class StorageUtil
 
 		try
 		{
-			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
-				FileSystem.createDirectory(StorageUtil.getStorageDirectory());
+			if (!mobile.Util.exists(StorageUtil.getStorageDirectory()))
+				mobile.Util.createDirectory(StorageUtil.getStorageDirectory());
 		}
 		catch (e:Dynamic)
 		{

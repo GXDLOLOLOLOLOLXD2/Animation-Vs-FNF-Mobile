@@ -11,16 +11,8 @@ import openfl.events.Event;
 
 import mobile.backend.MobileData;
 
-class Main extends Sprite {
-	public static final game = {
-		width: 1280,
-		height: 720,
-		initialState: TitleState,
-		framerate: 60,
-		skipSplash: true,
-		startFullscreen: false
-	};
-
+class Main extends Sprite
+{
 	var gameWidth:Int = 1280;
 	var gameHeight:Int = 720;
 	var initialState:Class<FlxState> = TitleState;

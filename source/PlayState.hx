@@ -753,7 +753,7 @@ class PlayState extends MusicBeatState
 				var xml = [];
 				trace("caching images...");
 	
-				for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters/animation/")))
+				for (i in mobile.Util.readDirectory(mobile.Util.readDirectory("assets/shared/images/characters/animation/")))
 				{
 					if (!i.endsWith(".png"))
 						continue;
@@ -785,7 +785,7 @@ class PlayState extends MusicBeatState
 				var xml = [];
 				trace("caching images...");
 	
-				for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/shared/images/characters/animation/")))
+				for (i in mobile.Util.readDirectory(mobile.Util.readDirectory("assets/shared/images/characters/animation/")))
 				{
 					if (!i.endsWith(".png"))
 						continue;
@@ -819,7 +819,7 @@ class PlayState extends MusicBeatState
 				/*var videos = [];
 				trace("caching images...");
 	
-				for (i in FileSystem.readDirectory(FileSystem.absolutePath("assets/videos/")))
+				for (i in mobile.Util.readDirectory(mobile.Util.readDirectory("assets/videos/")))
 				{
 					if (!i.endsWith(".mp4"))
 						continue;
@@ -840,9 +840,13 @@ class PlayState extends MusicBeatState
 				add(animatedbg);
 				remove(animatedbg);
 				
-				#if VIDEOS_ALLOWED
-				var bgVideo = new MP4Handler();
-				bgVideo.playBackground("animatedbg"); // video in infinite loop
+				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
+				var handler = new MP4Handler();
+				handler.finishCallback = function() {
+					handler.kill();
+					handler.playMP4("animatedbg.mp4", true);
+				};
+				handler.playMP4("animatedbg.mp4", true);
 				#end
 
 				if (animatedbgdisable == true)

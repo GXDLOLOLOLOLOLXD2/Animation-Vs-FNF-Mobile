@@ -236,7 +236,7 @@ class Paths
 		//k so for sum reason even when a current mod is loaded, it will only pull from the graphics key shit : (((
 		//so i made it test if one exists in the mod folder or the mod directories.
 		var pathshit = modsImages(key)
-		if (FileSystem.exists(path)){
+		if (mobile.Util.exists(path)){
 			imageToReturn = BitmapData.fromFile(path);
 		}
 		*/

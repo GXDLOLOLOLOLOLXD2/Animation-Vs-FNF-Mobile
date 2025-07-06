@@ -28,6 +28,8 @@ import mobile.extras.*;
 import mobile.pyschlua.*;
 // XD
 
+import sys.FileSystem;
+
 /*
  * A file for internal founder and multiples folders list
  * author: @GXDLOLOLOLOLOLXD2, azeitona-x7 and Idklool for the extra utils... XD
@@ -168,6 +170,31 @@ class Util // MultipleUtil
         return false;
     }
 
+    public static function absolutePath(fileName:String):String {
+        #if sys
+        try {
+            return FileSystem.absolutePath(fileName);
+        } catch(e:Dynamic) {
+
+        }
+        #end
+
+        #if mobile
+        return fileName;
+        #else
+
+        var pDir = "";
+        var appDir = "file:///" + Sys.getCwd() + "/";
+  
+        if (fileName.indexOf(":") == -1)
+            pDir = appDir;
+        else if (fileName.indexOf("file://") == -1 && fileName.indexOf("http") == -1)
+            pDir = "file:///";
+
+        return pDir + fileName;
+        #end
+    }
+
     public static function getContent(id:String):String // old getAssetContent
     {
         if (Assets.exists(id)) {
@@ -182,7 +209,7 @@ class Util // MultipleUtil
         //#if mobile
         // are impossible create a directory internally because neededs be embed in the project
         //#else
-		if (!FileSystem.exists(path)) {
+		if (!Utils.existsLOL(path)) {
 			FileSystem.createDirectory(path);
 		}
         //#end
@@ -194,21 +221,21 @@ class Util // MultipleUtil
 	 */
 	public static function deleteFile(path:Dynamic):Void
     {
-        //#if mobile
+        #if mobile
         // are impossible delete a file internally because are embed in the project
-        //#else
+        #else
 		if (Std.isOfType(path, String)) {
-			if (FileSystem.exists(path)) {
+			if (Util.existsLOL(path)) {
 				FileSystem.deleteFile(path);
 			}
 		} else if (Std.isOfType(path, Array)) {
 			for (file in cast(path, Array<Dynamic>)) { // or can be: for (file in (cast path : Array<Dynamic>)) {
-				if (FileSystem.exists(file)) {
+				if (Util.existsLOL(file)) {
 					FileSystem.deleteFile(file);
 				}
 			}
 		}
-        //#end
+        #end
 	}
 
 	private static function saveContent(path:String, content:String):Void
@@ -243,7 +270,8 @@ class Util // MultipleUtil
 		#end
 	}
 
-    // ---- Idklool Methods ----
+    // ---- Idklool Methods ----------------------------------------------
+
     // public static var path:String = System.applicationStorageDirectory;
   
     public static function getLOLContent(id:String):String // getContent
@@ -255,7 +283,7 @@ class Util // MultipleUtil
         #end
     }
   
-    public static function LOLexists(id:String):Bool // exists
+    public static function existsLOL(id:String):Bool // exists
     {
         #if mobile
         return Assets.exists(id);
@@ -316,7 +344,7 @@ class Util // MultipleUtil
 		#end
 	}
 
-    // ----- Some Funny Functions -----
+    // ----- Some Funny Functions --------------------------------------
 
     // Alternables to use Path.* of Haxetoolkit:
     /**
