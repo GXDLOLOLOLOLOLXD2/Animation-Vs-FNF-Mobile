@@ -81,7 +81,7 @@ class PlayState extends MusicBeatState
 {
     public static var animatedbgdisable:Bool;
 
-	var mp4Handler:MP4Handler;
+	var mp4:MP4Handler = new MP4Handler();
 
 	var creditsBG:FlxSprite;
 
@@ -821,7 +821,6 @@ class PlayState extends MusicBeatState
 			case 'animatedbg':
 
 				#if VIDEOS_ALLOWED // if the video ends, the video immediately restarts generating a loop
-				mp4Handler = new MP4Handler();
 				mp4.playMP4("assets/videos/animatedbg.mp4", true); // loop true
 				#end
 

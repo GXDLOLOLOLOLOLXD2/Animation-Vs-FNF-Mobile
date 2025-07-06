@@ -343,7 +343,7 @@ class VlcBitmap extends Bitmap
 
 	/////////////////////////////////////////////////////////////////////////////////////
 
-	public function vLoop(e)
+	function vLoop(e)
 	{
 		#if (cpp && !mobile)
 		checkFlags();
