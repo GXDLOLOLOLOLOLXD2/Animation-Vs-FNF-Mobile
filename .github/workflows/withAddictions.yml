@@ -65,9 +65,11 @@ jobs:
 
           haxelib list
 
-      - name: Installing a Old hxCodec with VideoSprite
+      - name: Baixar hxcodec com VideoSprite
         run: |
-          haxelib git hxcodec https://github.com/polybiusproxy/hxCodec.git f8e30a3c81501a3fe83c2e130f8ed4e8941c0a42
+          curl -L -o hxcodec.zip https://chat.openai.com/mnt/data/hxcodec-legacy-videosprite.zip
+          unzip hxcodec.zip -d hxcodec
+          haxelib dev hxcodec hxcodec
 
       - name: Setup Lime
         run: |
