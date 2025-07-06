@@ -33,7 +33,7 @@
 	<assets path="assets/week6"         library="week6"         exclude="*.ogg" if="web"/>
 	<assets path="assets/week6"         library="week6"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/videos" exclude="*.mp3" if="web"/>
-    <assets path="assets/videos" exclude="*.ogg" unless="web"/>
+        <assets path="assets/videos" exclude="*.ogg" unless="web"/>
 	<assets path="example_mods" rename="mods" embed="true" if="MODS_ALLOWED"/>
 	<assets path="art/readme.txt" rename="do NOT readme.txt" />
 
@@ -81,16 +81,16 @@
 
 	<!-- __________________________ Mandatory libraries __________________________ -->
 
-    <haxelib name="flixel" />
+        <haxelib name="flixel" />
 	<haxelib name="flixel-addons" />
 	<haxelib name="flixel-ui" />
 	<haxelib name="openfl" />
 	<haxelib name="lime" />
 	<haxelib name="hscript" />
-	<haxelib name="hxCodec" if="VIDEOS_ALLOWED"/>
+	<haxelib name="hxcodec" if="VIDEOS_ALLOWED"/>
 	<haxelib name="actuate" />
 	<haxelib name="hxcpp" />
-    <haxelib name="extension-webm" if="desktop" />
+        <haxelib name="extension-webm" if="desktop" />
 	<haxelib name="extension-androidtools" if="mobile" />
 	<haxelib name="linc_luajit" if="LUA_ALLOWED"/>
 	<haxelib name="faxe" if='switch'/>
